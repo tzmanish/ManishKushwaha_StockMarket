@@ -17,7 +17,7 @@ namespace AccountAPI.Repositories {
         }
 
         public User Validate(string uname, string pass) {
-            User user = context.User.SingleOrDefault(i => i.Username == uname && i.Password == pass);
+            User user = context.Users.SingleOrDefault(i => i.Username == uname && i.Password == pass);
             return user;
         }
     }

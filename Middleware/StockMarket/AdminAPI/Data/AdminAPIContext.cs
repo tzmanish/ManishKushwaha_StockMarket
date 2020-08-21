@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AdminAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using AccountAPI.Models;
 
-namespace AccountAPI.Data
-{
-    public class AccountAPIContext : DbContext
-    {
-        public AccountAPIContext (DbContextOptions<AccountAPIContext> options): base(options)
-        {
-        }
-
+namespace AdminAPI.Data {
+    public class AdminAPIContext:DbContext {
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<StockPrice> StockPrices { get; set; }
