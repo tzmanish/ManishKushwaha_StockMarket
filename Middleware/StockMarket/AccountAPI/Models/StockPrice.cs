@@ -29,7 +29,7 @@ namespace AccountAPI.Models {
 
         public string Time { get; set; }
 
-        public Company Company { get; set; } //Navigation Prop
+        public Company Company { get; set; }    //Navigation Prop
 
         //1. Company Code – to which Company this Stock Price Info belongs to *
         //2. Stock Exchange – the Stock Price of the Company in this Stock Exchange *

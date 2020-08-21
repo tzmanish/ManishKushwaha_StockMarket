@@ -4,14 +4,16 @@ using AccountAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AccountAPI.Migrations
 {
     [DbContext(typeof(AccountAPIContext))]
-    partial class AccountAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20200821061351_Created_IPODetails_Table")]
+    partial class Created_IPODetails_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

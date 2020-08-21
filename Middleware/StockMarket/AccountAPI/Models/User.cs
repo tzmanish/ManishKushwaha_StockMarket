@@ -31,7 +31,6 @@ namespace AccountAPI.Models {
         [Required]
         public bool Confirmed { get; set; }
 
-
         //1. Id *
         //2. Username *
         //3. Password *
