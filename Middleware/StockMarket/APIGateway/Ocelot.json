@@ -1,0 +1,43 @@
+{
+    "Routes": [
+        {
+            //UserAPI - Find Companies
+            "DownstreamPathTemplate": "/api/Companies",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 65443
+                }
+            ],
+            "UpstreamPathTemplate": "/User/Companies/"
+        },
+        {
+            //AdminAPI - Manage Companies
+            "DownstreamPathTemplate": "/api/Companies",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 49379
+                }
+            ],
+            "UpstreamPathTemplate": "/Admin/Companies/"
+        },
+        {
+            //AccountAPI - Manage User Accounts
+            "DownstreamPathTemplate": "/api/Account",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 49428
+                }
+            ],
+            "UpstreamPathTemplate": "/Account/"
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "https://loaclhost:65283"
+    }
+}
