@@ -32,12 +32,12 @@ namespace AccountAPI.Models {
         public bool Confirmed { get; set; }
 
 
-        //1. Id
-        //2. Username
-        //3. Password
-        //4. UserType(if Admin or normal User)
-        //5. E-mail
-        //6. Mobile number
-        //7. Confirmed
+        //1. Id *
+        //2. Username *
+        //3. Password *
+        //4. UserType(if Admin or normal User) *
+        //5. E-mail *
+        //6. Mobile number *
+        //7. Confirmed *
     }
 }

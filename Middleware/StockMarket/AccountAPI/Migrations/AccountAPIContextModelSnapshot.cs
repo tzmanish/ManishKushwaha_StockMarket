@@ -21,10 +21,15 @@ namespace AccountAPI.Migrations
 
             modelBuilder.Entity("AccountAPI.Models.Company", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("CompanyCode")
+                        .HasColumnType("nvarchar(15)")
+                        .HasMaxLength(15);
+
+                    b.Property<string>("BoardOfDirectors")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Brief")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CEO")
                         .HasColumnType("nvarchar(30)")
@@ -35,10 +40,17 @@ namespace AccountAPI.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
+                    b.Property<string>("Sector")
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("StockExchanges")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Turnover")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasKey("CompanyCode");
 
                     b.ToTable("Company");
                 });
@@ -50,8 +62,10 @@ namespace AccountAPI.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("CompanyCode")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CompanyCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)")
+                        .HasMaxLength(15);
 
                     b.Property<double>("CurrentPrice")
                         .HasColumnType("float");

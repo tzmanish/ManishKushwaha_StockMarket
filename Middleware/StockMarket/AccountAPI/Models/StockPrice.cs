@@ -12,7 +12,9 @@ namespace AccountAPI.Models {
         public long Id { get; set; }
 
         [ForeignKey("Company")]
-        public long CompanyCode { get; set; }
+        [Required]
+        [StringLength(15)]
+        public string CompanyCode { get; set; }
 
         [Required]
         [StringLength(30)]
@@ -29,10 +31,10 @@ namespace AccountAPI.Models {
 
         public Company Company { get; set; } //Navigation Prop
 
-        //1. Company Code – to which Company this Stock Price Info belongs to
-        //2. Stock Exchange – the Stock Price of the Company in this Stock Exchange
-        //3. Current Price – Stock Price
-        //4. Date – Date of the Stock Price
-        //5. Time – Stock Price at this Specific time
+        //1. Company Code – to which Company this Stock Price Info belongs to *
+        //2. Stock Exchange – the Stock Price of the Company in this Stock Exchange *
+        //3. Current Price – Stock Price *
+        //4. Date – Date of the Stock Price *
+        //5. Time – Stock Price at this Specific time *
     }
 }

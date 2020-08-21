@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AccountAPI.Migrations
 {
-    public partial class CreateTables_Company_User_StockPrice : Migration
+    public partial class Created_Company_StockPrice_User : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,15 +11,18 @@ namespace AccountAPI.Migrations
                 name: "Company",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyCode = table.Column<string>(maxLength: 15, nullable: false),
                     CompanyName = table.Column<string>(maxLength: 30, nullable: false),
                     Turnover = table.Column<double>(nullable: false),
-                    CEO = table.Column<string>(maxLength: 30, nullable: true)
+                    CEO = table.Column<string>(maxLength: 30, nullable: true),
+                    Brief = table.Column<string>(nullable: true),
+                    Sector = table.Column<string>(maxLength: 30, nullable: true),
+                    BoardOfDirectors = table.Column<string>(nullable: true),
+                    StockExchanges = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Company", x => x.Id);
+                    table.PrimaryKey("PK_Company", x => x.CompanyCode);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,7 +49,7 @@ namespace AccountAPI.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyCode = table.Column<long>(nullable: false),
+                    CompanyCode = table.Column<string>(maxLength: 15, nullable: false),
                     StockExchange = table.Column<string>(maxLength: 30, nullable: false),
                     CurrentPrice = table.Column<double>(nullable: false),
                     Date = table.Column<DateTime>(type: "Date", nullable: false),
@@ -59,7 +62,7 @@ namespace AccountAPI.Migrations
                         name: "FK_StockPrice_Company_CompanyCode",
                         column: x => x.CompanyCode,
                         principalTable: "Company",
-                        principalColumn: "Id",
+                        principalColumn: "CompanyCode",
                         onDelete: ReferentialAction.Cascade);
                 });
 
