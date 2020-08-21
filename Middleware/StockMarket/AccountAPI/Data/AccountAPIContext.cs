@@ -9,10 +9,6 @@ namespace AccountAPI.Data
 {
     public class AccountAPIContext : DbContext
     {
-        public AccountAPIContext (DbContextOptions<AccountAPIContext> options): base(options)
-        {
-        }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<StockPrice> StockPrices { get; set; }
