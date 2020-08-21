@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using AdminAPI.Models;
 
 namespace AdminAPI.Repositories {
-    interface IAdminRepository {
+    public interface IAdminRepository {
+        public List<Company> GetAllCompanies();
+        public Company GetCompanyById(string id);
+        public void UpdateCompany(Company company);
+        public void AddCompany(Company company);
+        public void DeleteCompany(string id);
     }
 }
