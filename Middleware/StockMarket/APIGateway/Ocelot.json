@@ -2,7 +2,7 @@
     "Routes": [
         {
             //UserAPI - Find Companies
-            "DownstreamPathTemplate": "/api/Companies",
+            "DownstreamPathTemplate": "/api/User/{url}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -10,11 +10,11 @@
                     "Port": 65443
                 }
             ],
-            "UpstreamPathTemplate": "/User/Companies/"
+            "UpstreamPathTemplate": "/{url}"
         },
         {
             //AdminAPI - Manage Companies
-            "DownstreamPathTemplate": "/api/Companies",
+            "DownstreamPathTemplate": "/api/Admin/{url}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -22,11 +22,11 @@
                     "Port": 49379
                 }
             ],
-            "UpstreamPathTemplate": "/Admin/Companies/"
+            "UpstreamPathTemplate": "/Admin/{url}"
         },
         {
             //AccountAPI - Manage User Accounts
-            "DownstreamPathTemplate": "/api/Account",
+            "DownstreamPathTemplate": "/api/Account/{url}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -34,7 +34,7 @@
                     "Port": 49428
                 }
             ],
-            "UpstreamPathTemplate": "/Account/"
+            "UpstreamPathTemplate": "/Account/{url}"
         }
     ],
     "GlobalConfiguration": {

@@ -7,29 +7,32 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdminAPI.Data;
 using AdminAPI.Models;
+using Microsoft.AspNetCore.Routing;
 
 namespace AdminAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CompaniesController : ControllerBase
+    public class AdminController : ControllerBase
     {
         private readonly AdminAPIContext _context;
 
-        public CompaniesController(AdminAPIContext context)
+        public AdminController(AdminAPIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Companies
+        // GET: api/admin/companies
         [HttpGet]
+        [Route("companies")]
         public async Task<ActionResult<IEnumerable<Company>>> GetCompanies()
         {
             return await _context.Companies.ToListAsync();
         }
 
-        // GET: api/Companies/5
-        [HttpGet("{id}")]
+        // GET: api/admin/companies/AIR
+        [HttpGet]
+        [Route("companies/{id}")]
         public async Task<ActionResult<Company>> GetCompany(string id)
         {
             var company = await _context.Companies.FindAsync(id);
@@ -42,10 +45,11 @@ namespace AdminAPI.Controllers
             return company;
         }
 
-        // PUT: api/Companies/5
+        // PUT: api/admin/Companies/AIR
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+        [HttpPut]
+        [Route("companies/{id}")]
         public async Task<IActionResult> PutCompany(string id, Company company)
         {
             if (id != company.CompanyCode)
@@ -74,10 +78,11 @@ namespace AdminAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Companies
+        // POST: api/admin/Companies
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [Route("companies")]
         public async Task<ActionResult<Company>> PostCompany(Company company)
         {
             _context.Companies.Add(company);
@@ -100,8 +105,9 @@ namespace AdminAPI.Controllers
             return CreatedAtAction("GetCompany", new { id = company.CompanyCode }, company);
         }
 
-        // DELETE: api/Companies/5
-        [HttpDelete("{id}")]
+        // DELETE: api/admin/Companies/AIR
+        [HttpDelete]
+        [Route("companies/{id}")]
         public async Task<ActionResult<Company>> DeleteCompany(string id)
         {
             var company = await _context.Companies.FindAsync(id);
