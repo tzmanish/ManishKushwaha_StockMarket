@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AccountAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using AccountAPI.Models;
 
-namespace AccountAPI.Data
-{
+namespace AccountAPI.Data {
     public class AccountAPIContext : DbContext
     {
         public DbSet<User> Users { get; set; }
