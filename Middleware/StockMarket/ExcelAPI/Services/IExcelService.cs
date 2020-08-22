@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using ExcelAPI.Models;
 
 namespace ExcelAPI.Services {
-    interface IExcelService {
+    public interface IExcelService {
+        public List<StockPrice> ImportSpreadsheet(string filePath, string worksheetName);
     }
 }

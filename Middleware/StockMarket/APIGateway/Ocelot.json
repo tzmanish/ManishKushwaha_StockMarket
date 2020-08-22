@@ -14,7 +14,7 @@
         },
         {
             //AdminAPI - Manage Companies
-            "DownstreamPathTemplate": "/api/Admin/{url}",
+            "DownstreamPathTemplate": "/api/Admin/Companies/{url}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -22,7 +22,18 @@
                     "Port": 49379
                 }
             ],
-            "UpstreamPathTemplate": "/Admin/{url}"
+            "UpstreamPathTemplate": "/Admin/Companies/{url}"
+        },
+        {
+            "DownstreamPathTemplate": "/api/Admin/Companies",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 49379
+                }
+            ],
+            "UpstreamPathTemplate": "/Admin/Companies/All"
         },
         {
             //AccountAPI - Manage User Accounts
@@ -35,6 +46,18 @@
                 }
             ],
             "UpstreamPathTemplate": "/Account/{url}"
+        },
+        {
+            //ExcelAPI - Import Spreadsheet
+            "DownstreamPathTemplate": "/api/Excel/{url}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 49393
+                }
+            ],
+            "UpstreamPathTemplate": "/Admin/Excel/{url}"
         }
     ],
     "GlobalConfiguration": {

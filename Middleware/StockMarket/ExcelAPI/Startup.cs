@@ -1,3 +1,4 @@
+using ExcelAPI.Data;
 using ExcelAPI.Repositories;
 using ExcelAPI.Services;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +19,7 @@ namespace ExcelAPI {
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers();
 
+            services.AddDbContext<ExcelAPIContext>();
             services.AddTransient<IExcelRepositiory, ExcelRepository>();
             services.AddTransient<IExcelService, ExcelService>();
         }

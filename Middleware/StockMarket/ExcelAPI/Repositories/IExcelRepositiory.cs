@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using ExcelAPI.Models;
 
 namespace ExcelAPI.Repositories {
-    interface IExcelRepositiory {
+    public interface IExcelRepositiory {
+        public void AddStockPrices(List<StockPrice> stockPrices);
     }
 }
