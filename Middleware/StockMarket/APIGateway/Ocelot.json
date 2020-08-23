@@ -33,7 +33,7 @@
                     "Port": 49379
                 }
             ],
-            "UpstreamPathTemplate": "/Admin/Companies/All"
+            "UpstreamPathTemplate": "/Admin/Companies"
         },
         {
             //AccountAPI - Manage User Accounts
@@ -46,6 +46,17 @@
                 }
             ],
             "UpstreamPathTemplate": "/Account/{url}"
+        },
+        {
+            "DownstreamPathTemplate": "/api/Account",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 49428
+                }
+            ],
+            "UpstreamPathTemplate": "/Account"
         },
         {
             //ExcelAPI - Import Spreadsheet
