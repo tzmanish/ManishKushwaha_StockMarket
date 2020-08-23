@@ -1,0 +1,93 @@
+<div id="signup-form">
+    <h2>Register</h2>
+    <hr>
+    <div *ngIf="errMsg" class="alert alert-danger" role="alert">{{errMsg}}</div>
+    <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Username*</label>
+        <input 
+          type="text" 
+          [(ngModel)]="user.username" 
+          #username="ngModel"
+          (keyup)="this.isTaken()"
+          [ngClass]="{'is-invalid': (username.errors || istaken) && username.touched, 
+                      'is-valid': !(username.errors || istaken) && username.touched}"
+          class="form-control" 
+          placeholder="Username"
+          name="username"
+          required
+          minlength="3"
+        >
+        <div [hidden]="!username.errors?.required" class="invalid-feedback">
+          Username is required
+        </div>
+        <div [hidden]="!username.errors?.minlength" class="invalid-feedback">
+          Username should be atleast 3 characters long
+        </div>
+        <div [hidden]="!this.istaken" class="invalid-feedback">
+          Username already taken
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email"
+          [(ngModel)]="user.email" 
+          #email="ngModel"
+          [ngClass]="{'is-invalid': email.errors && email.touched && user.email.length>0, 
+                      'is-valid': !email.errors && email.touched && user.email.length>0}"
+          class="form-control"
+          placeholder="Email-id"
+          name="email"
+          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        >
+        <div class="invalid-feedback">
+          Email is invalid (Format: email@example.com)
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="mobile">Phone</label>
+        <input 
+          type="tel" 
+          [(ngModel)]="user.mobile" 
+          #mobile="ngModel"
+          [ngClass]="{'is-invalid': mobile.errors && mobile.touched && user.mobile.length>0, 
+                      'is-valid': !mobile.errors && mobile.touched && user.mobile.length>0}"
+          class="form-control" 
+          placeholder="Phone"
+          name="mobile"
+          pattern="^\d{10}$"
+        >
+        <div class="invalid-feedback">
+          Please enter 10 digit phone number (Format: 123467890)
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password*</label>
+        <input 
+          type="password" 
+          [(ngModel)]="user.password" 
+          #password="ngModel"
+          [ngClass]="{'is-invalid': password.errors && password.touched, 
+                      'is-valid': !password.errors && password.touched}"
+          class="form-control" 
+          placeholder="Password"
+          name="password"
+          required
+          minlength="6"
+        >
+        <div [hidden]="!password.errors?.required" class="invalid-feedback">
+          Password is required
+        </div>
+        <div [hidden]="!password.errors?.minlength" class="invalid-feedback">
+          Password should be atleast 6 characters long
+        </div>
+      </div>
+
+      <button [disabled]="!signupForm.form.valid || istaken" class="btn btn-primary" >Register</button>
+      <a routerLink="/login" class="btn">Login</a>
+    </form>
+</div>

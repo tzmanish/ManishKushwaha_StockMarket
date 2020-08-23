@@ -15,4 +15,12 @@ export class AccountService {
   public authenticate(username:string, password:string):Observable<User> {
     return this.http.get<User>(`${this.path}/Account/Validate/${username}/${password}`);
   }
+
+  public register(user:User) {
+    return this.http.post(`${this.path}/Account`, user);
+  }
+
+  public isTaken(username:string):Observable<boolean>{
+    return this.http.get<boolean>(`${this.path}/Account/isTaken/${username}`);
+  }
 }
