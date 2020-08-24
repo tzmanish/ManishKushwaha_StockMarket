@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './Views/login/login.component';
 import { SignupComponent } from './Views/signup/signup.component';
+import { NotFoundComponent } from './Views/not-found/not-found.component';
 
 
 const routes: Routes = [
   {path:'login', component:LoginComponent},
-  {path:'register', component:SignupComponent}
+  {path:'register', component:SignupComponent},
+  {path:'**', component:NotFoundComponent}
 ];
 
 @NgModule({

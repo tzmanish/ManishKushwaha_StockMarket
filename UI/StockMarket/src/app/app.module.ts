@@ -8,12 +8,16 @@ import { LoginComponent } from './Views/login/login.component';
 import { SignupComponent } from './Views/signup/signup.component';
 import { AccountService } from './Services/account.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NotFoundComponent } from './Views/not-found/not-found.component';
+import { NavbarComponent } from './Views/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    NotFoundComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
