@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/Services/account.service';
 import { User } from 'src/app/Models/user';
-import { FormBuilder } from '@angular/forms'
+import { FormBuilder, FormGroup } from '@angular/forms'
 
 @Component({
   selector: 'app-login',
@@ -10,7 +10,7 @@ import { FormBuilder } from '@angular/forms'
 })
 export class LoginComponent implements OnInit {
   user:User;
-  loginForm:any;
+  loginForm:FormGroup;
   errMsg:string;
 
   constructor(private service:AccountService, private formBuilder:FormBuilder) {
@@ -23,11 +23,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(loginCredentials){
-    this.service.authenticate(loginCredentials.username, loginCredentials.password)
+  onSubmit(){
+
+    this.service.authenticate(this.loginForm.value.username, this.loginForm.value.password)
       .subscribe(U=>{
         this.user = U;
-        this.errMsg = `id: ${this.user.id}, username: ${this.user.username}`;
+        console.log(`id: ${this.user.id}, username: ${this.user.username}`);
+        this.resetForm();
         // redirect to homepage
       },err=>{
         this.resetForm();
@@ -39,5 +41,6 @@ export class LoginComponent implements OnInit {
 
   public resetForm(){
     this.errMsg = "";
+    // this.loginForm.reset();
   }
 }
