@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
         this.user = U;
         console.log(`id: ${this.user.id}, username: ${this.user.username}`);
         this.resetForm();
+        // Set session
         // redirect to homepage
       },err=>{
         this.resetForm();
