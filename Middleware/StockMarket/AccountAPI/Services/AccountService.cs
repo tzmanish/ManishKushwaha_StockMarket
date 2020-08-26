@@ -8,20 +8,20 @@ namespace AccountAPI.Services {
         public AccountService(IAccountRepository repo) {
             this.repo = repo;
         }
-        public void AddUser(User user) {
-            repo.AddUser(user);
+        public User AddUser(User user) {
+            return repo.AddUser(user);
         }
 
-        public void DeleteUser(long id) {
-            repo.DeleteUser(id);
+        public User DeleteUser(long id) {
+            return repo.DeleteUser(id);
         }
 
         public User GetUser(long id) {
             return repo.GetUserById(id);
         }
 
-        public void UpdateUser(User user) {
-            repo.UpdateUser(user);
+        public User UpdateUser(User user) {
+            return repo.UpdateUser(user);
         }
 
         public User Validate(string uname, string pass) {

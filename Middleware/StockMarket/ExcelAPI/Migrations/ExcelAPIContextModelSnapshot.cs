@@ -50,6 +50,9 @@ namespace ExcelAPI.Migrations
                     b.Property<double>("Turnover")
                         .HasColumnType("float");
 
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
                     b.HasKey("CompanyCode");
 
                     b.ToTable("Company");

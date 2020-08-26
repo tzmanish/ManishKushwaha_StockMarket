@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AdminAPI.Models;
 
 namespace AdminAPI.Services {
@@ -7,10 +8,19 @@ namespace AdminAPI.Services {
 
         public Company GetCompany(string id);
 
-        public void PutCompany(Company company);
+        public Company PutCompany(Company company);
 
-        public void PostCompany(Company company);
+        public Company AddCompany(Company company);
 
-        public void DeleteCompany(string id);
+        public Company DeleteCompany(string id);
+        public IPODetails AddIPO(IPODetails iPO);
+        public IPODetails UpdateIPO(IPODetails iPO);
+        public List<DateTime> GetMissingStockPriceDates(
+            string companyCode, 
+            DateTime startDate, 
+            DateTime endDate
+        );
+        public Company ActivateCompany(string companyCode);
+        public Company DeactivateCompany(string companyCode);
     }
 }

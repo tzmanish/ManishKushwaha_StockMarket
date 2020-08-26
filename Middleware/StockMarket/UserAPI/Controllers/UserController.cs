@@ -1,50 +1,87 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using UserAPI.Data;
 using UserAPI.Models;
+using UserAPI.Services;
 
-namespace UserAPI.Controllers
-{
+namespace UserAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserAPIContext _context;
+        private IUserService service;
 
-        public UserController(UserAPIContext context)
+        public UserController(IUserService service)
         {
-            _context = context;
+            this.service = service;
         }
 
         // GET: api/user/companies
         [HttpGet]
-        [Route("companies")]
-        public async Task<ActionResult<IEnumerable<Company>>> GetCompanies()
+        [Route("Companies/All")]
+        public IActionResult GetCompanies()
         {
-            return await _context.Companies.ToListAsync();
+            try {
+                List<Company> companies = service.GetCompanies();
+                if (companies.Any()) return Ok(companies);
+                return NotFound("No active company found in record.");
+            } catch(Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // GET: api/user/companies/AIR
         [HttpGet]
-        [Route("companies/{query}")]
-        public async Task<ActionResult<IEnumerable<Company>>> GetCompanies(string query)
+        [Route("Companies/{id}")]
+        public IActionResult GetCompany(string id) {
+            try {
+                Company company = service.GetCompany(id);
+                if (company != null) return Ok(company);
+                return NotFound(id + " not found.");
+            } catch (Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        // GET: api/user/companies/AIR
+        [HttpGet]
+        [Route("Companies/Search/{query}")]
+        public IActionResult GetCompanies(string query)
         {
-            List<Company> companies = await _context.Companies.Where(c =>
-                c.CompanyCode.ToLower().StartsWith(query.ToLower()) ||
-                c.CompanyName.ToLower().StartsWith(query.ToLower())
-            ).ToListAsync();
+            try {
+                List<Company> companies = service.GetCompanies(query);
+                if(companies.Any()) return Ok(companies);
+                return NotFound("No active company found matching "+query);
+            }catch(Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
-            if (companies.Any()) return companies;
-
-            return await _context.Companies.Where(c=>
-                c.CompanyCode.ToLower().Contains(query.ToLower()) ||
-                c.CompanyName.ToLower().Contains(query.ToLower())
-            ).ToListAsync();
+        [HttpGet]
+        [Route("IPO/{companyCode}")]
+        public IActionResult GetIPODetails(string companyCode) {
+            try {
+                if (!service.IsActive(companyCode)) return NotFound("No active company identified by "+companyCode);
+                List<IPODetails> details = service.GetIPODetails(companyCode);
+                if(details.Any()) return Ok(details);
+                return NotFound("No IPO Detail found for " + companyCode);
+            } catch(Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        
+        [HttpGet]
+        [Route("StockPrices/{companyCode}/{startDate}/{endDate}")]
+        public IActionResult GetStockPrices(string companyCode, DateTime startDate, DateTime endDate) {
+            try {
+                if (!service.IsActive(companyCode)) return NotFound("No active company identified by " + companyCode);
+                List<StockPrice> stockPrices = service.GetStockPrices(companyCode, startDate, endDate);
+                if (stockPrices.Any()) return Ok(stockPrices);
+                return NotFound($"No stock-price details for {companyCode} between {startDate} and {endDate}.");
+            }catch(Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

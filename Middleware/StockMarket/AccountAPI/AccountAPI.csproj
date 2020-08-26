@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200821061230_Created_IPODetails_Table.cs" />
     <Compile Remove="Migrations\20200821061230_Created_IPODetails_Table.Designer.cs" />
+    <Compile Remove="Migrations\20200826060831_added compani is-active field.cs" />
+    <Compile Remove="Migrations\20200826060831_added compani is-active field.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

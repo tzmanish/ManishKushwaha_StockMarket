@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using ExcelAPI.Models;
 using ExcelAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace ExcelAPI.Controllers {
     [Route("api/[controller]")]
@@ -17,6 +20,20 @@ namespace ExcelAPI.Controllers {
             try {
                 return Ok(service.ImportSpreadsheet(filePath, worksheet));
             } catch(Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("Update/{worksheet}/{*filePath}")]
+        public IActionResult ExportExcel(string worksheet, string filePath, List<StockPrice> stockPrices) {
+            try {
+                if (stockPrices.Count>0) {
+                    service.ExportData(filePath, worksheet, stockPrices);
+                    return Ok(filePath);
+                } else 
+                    return BadRequest("Please provide some data to write.");
+            } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
         }

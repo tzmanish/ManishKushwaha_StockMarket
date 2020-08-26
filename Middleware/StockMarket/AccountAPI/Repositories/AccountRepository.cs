@@ -9,14 +9,17 @@ namespace AccountAPI.Repositories {
         public AccountRepository(AccountAPIContext context) {
             this.context = context;
         }
-        public void AddUser(User user) {
+        public User AddUser(User user) {
             context.Users.Add(user);
             context.SaveChanges();
+            return user;
         }
 
-        public void DeleteUser(long id) {
-            context.Users.Remove(GetUserById(id));
+        public User DeleteUser(long id) {
+            User user = GetUserById(id);
+            context.Users.Remove(user);
             context.SaveChanges();
+            return user;
         }
 
         public List<User> GetAllUsers() {
@@ -31,9 +34,10 @@ namespace AccountAPI.Repositories {
             return context.Users.Where(U => U.Username == username).Any();
         }
 
-        public void UpdateUser(User user) {
+        public User UpdateUser(User user) {
             context.Users.Update(user);
             context.SaveChanges();
+            return user;
         }
 
         public User Validate(string uname, string pass) {

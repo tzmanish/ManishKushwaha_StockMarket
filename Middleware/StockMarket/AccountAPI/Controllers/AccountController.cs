@@ -2,6 +2,7 @@
 using AccountAPI.Models;
 using AccountAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace AccountAPI.Controllers {
     [Route("api/[controller]")]
@@ -12,13 +13,13 @@ namespace AccountAPI.Controllers {
             this.service = service;
         }
 
-        [HttpGet]
-        [Route("Validate/{uname}/{pass}")]
-        public IActionResult Validate(string uname, string pass) {
+        [HttpPost]
+        [Route("Validate")]
+        public IActionResult Validate(User credentials) {
             try {
-                User user = service.Validate(uname, pass);
+                User user = service.Validate(credentials.Username, credentials.Password);
                 if (user == null) {
-                    return Content("Invalid User");
+                    return StatusCode(401, "Invalid Credentials");
                 }
                 return Ok(user);
             } catch (Exception ex) {
@@ -37,10 +38,10 @@ namespace AccountAPI.Controllers {
         }
 
         [HttpPost]
+        [Route("Add")]
         public IActionResult AddUser(User user) {
             try {
-                service.AddUser(user);
-                return Ok();
+                return Ok(service.AddUser(user));
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
@@ -49,21 +50,21 @@ namespace AccountAPI.Controllers {
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(long id) {
             try {
-                service.DeleteUser(id);
-                return StatusCode(200);
+                return Ok(service.DeleteUser(id));
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
         }
+        
         [HttpGet("{id}")]
         public IActionResult GetUser(long id) {
             try {
-                User user = service.GetUser(id);
-                return Ok(user);
+                return Ok(service.GetUser(id));
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
         }
+        
         [HttpGet]
         [Route("All")]
         public IActionResult GetAllUsers() {
@@ -73,14 +74,12 @@ namespace AccountAPI.Controllers {
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPut("{id}")]
-        public IActionResult UpdateUser(long id, User user) {
-            if (id != user.Id) {
-                return BadRequest();
-            }
+        
+        [HttpPut]
+        [Route("Update")]
+        public IActionResult UpdateUser(User user) {
             try {
-                service.UpdateUser(user);
-                return StatusCode(200);
+                return Ok(service.UpdateUser(user));
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }

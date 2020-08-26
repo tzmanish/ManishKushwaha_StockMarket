@@ -14,61 +14,49 @@ namespace AdminAPI.Controllers {
         public AdminController(IAdminService service) {
             this.service = service;
         }
-        // GET: api/admin/companies
+
         [HttpGet]
-        [Route("companies")]
-        public IActionResult GetCompanies()
-        {
+        [Route("Companies/All")]
+        public IActionResult GetAllCompanies() {
             try {
                 List<Company> companies = service.GetCompanies();
-                if(companies.Any())
+                if (companies.Any())
                     return Ok(companies);
-                return Content("Currenty there is no company in record.");
-            } catch(Exception ex) {
+                return NotFound("No companies in record.");
+            } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
         }
 
-        // GET: api/admin/companies/AIR
         [HttpGet]
-        [Route("companies/{id}")]
-        public IActionResult GetCompany(string id)
-        {
+        [Route("Companies/{id}")]
+        public IActionResult GetCompany(string id) {
             try {
                 Company company = service.GetCompany(id);
-                if (company!=null)
+                if (company != null)
                     return Ok(company);
-                return NotFound();
+                return NotFound(id + " not found.");
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
         }
 
-        // PUT: api/admin/Companies/AIR
         [HttpPut]
-        [Route("companies/{id}")]
-        public IActionResult PutCompany(string id, Company company)
-        {
-            if (id != company.CompanyCode){
-                return BadRequest();
-            }
-
+        [Route("Companies/Update")]
+        public IActionResult UpdateCompany(Company company){
             try {
-                service.PutCompany(company);
-                return StatusCode(200);
+                return Ok(service.PutCompany(company));
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
         }
 
-        // POST: api/admin/Companies
         [HttpPost]
-        [Route("companies")]
-        public IActionResult PostCompany(Company company)
+        [Route("Companies/Add")]
+        public IActionResult AddCompany(Company company)
         {
             try {
-                service.PostCompany(company);
-                return StatusCode(200);
+                return Ok(service.AddCompany(company));
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
@@ -76,12 +64,63 @@ namespace AdminAPI.Controllers {
 
         // DELETE: api/admin/Companies/AIR
         [HttpDelete]
-        [Route("companies/{id}")]
+        [Route("Companies/{id}")]
         public IActionResult DeleteCompany(string id)
         {
             try {
-                service.DeleteCompany(id);
-                return StatusCode(200);
+                return Ok(service.DeleteCompany(id));
+            } catch (Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("IPO/Add")]
+        public IActionResult AddIPO(IPODetails iPODetails) {
+            try {
+                return Ok(service.AddIPO(iPODetails));
+            } catch (Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("IPO/Update")]
+        public IActionResult UpdateIPO(IPODetails iPODetails) {
+            try {
+                return Ok(service.UpdateIPO(iPODetails));
+            } catch (Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("StockPrices/Missing/{companyCode}/{startDate}/{endDate}")]
+        public IActionResult GetMissingStockPriceDates(string companyCode, DateTime startDate, DateTime endDate) {
+            try {
+                List<DateTime> missingDates = service.GetMissingStockPriceDates(companyCode, startDate, endDate);
+                if (missingDates.Any()) return Ok(missingDates); 
+                return NotFound($"no missing dates found between {startDate} and {endDate}.");
+            }catch(Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("Companies/Activate/{companyCode}")]
+        public IActionResult ActivateCompany(string companyCode) {
+            try {
+                return Ok(service.ActivateCompany(companyCode));
+            } catch (Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("Companies/Deactivate/{companyCode}")]
+        public IActionResult DeactivateCompany(string companyCode) {
+            try {
+                return Ok(service.DeactivateCompany(companyCode));
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }

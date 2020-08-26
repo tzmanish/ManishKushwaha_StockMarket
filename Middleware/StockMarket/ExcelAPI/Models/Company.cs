@@ -29,5 +29,6 @@ namespace ExcelAPI.Models {
         public string BoardOfDirectors { get; set; }
 
         public string StockExchanges { get; set; }
+        public bool isActive { get; set; }
     }
 }

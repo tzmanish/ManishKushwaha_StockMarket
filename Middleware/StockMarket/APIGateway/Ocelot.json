@@ -10,11 +10,11 @@
                     "Port": 65443
                 }
             ],
-            "UpstreamPathTemplate": "/{url}"
+            "UpstreamPathTemplate": "/User/{url}"
         },
         {
             //AdminAPI - Manage Companies
-            "DownstreamPathTemplate": "/api/Admin/Companies/{url}",
+            "DownstreamPathTemplate": "/api/Admin/{url}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -22,18 +22,7 @@
                     "Port": 49379
                 }
             ],
-            "UpstreamPathTemplate": "/Admin/Companies/{url}"
-        },
-        {
-            "DownstreamPathTemplate": "/api/Admin/Companies",
-            "DownstreamScheme": "http",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "localhost",
-                    "Port": 49379
-                }
-            ],
-            "UpstreamPathTemplate": "/Admin/Companies"
+            "UpstreamPathTemplate": "/Admin/{url}"
         },
         {
             //AccountAPI - Manage User Accounts
@@ -48,17 +37,6 @@
             "UpstreamPathTemplate": "/Account/{url}"
         },
         {
-            "DownstreamPathTemplate": "/api/Account",
-            "DownstreamScheme": "http",
-            "DownstreamHostAndPorts": [
-                {
-                    "Host": "localhost",
-                    "Port": 49428
-                }
-            ],
-            "UpstreamPathTemplate": "/Account"
-        },
-        {
             //ExcelAPI - Import Spreadsheet
             "DownstreamPathTemplate": "/api/Excel/{url}",
             "DownstreamScheme": "http",
@@ -68,7 +46,7 @@
                     "Port": 49393
                 }
             ],
-            "UpstreamPathTemplate": "/Admin/Excel/{url}"
+            "UpstreamPathTemplate": "/Excel/{url}"
         }
     ],
     "GlobalConfiguration": {

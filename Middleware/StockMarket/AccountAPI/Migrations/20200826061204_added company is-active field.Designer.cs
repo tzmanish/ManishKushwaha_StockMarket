@@ -4,14 +4,16 @@ using AccountAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AccountAPI.Migrations
 {
     [DbContext(typeof(AccountAPIContext))]
-    partial class AccountAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20200826061204_added company is-active field")]
+    partial class addedcompanyisactivefield
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

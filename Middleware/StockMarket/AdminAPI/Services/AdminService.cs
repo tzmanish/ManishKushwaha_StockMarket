@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AdminAPI.Models;
 using AdminAPI.Repositories;
 
@@ -8,8 +9,9 @@ namespace AdminAPI.Services {
         public AdminService(IAdminRepository repo) {
             this.repo = repo;
         }
-        public void DeleteCompany(string id) {
-            repo.DeleteCompany(id);
+
+        public Company DeleteCompany(string id) {
+            return repo.DeleteCompany(id);
         }
 
         public List<Company> GetCompanies() {
@@ -20,12 +22,36 @@ namespace AdminAPI.Services {
             return repo.GetCompanyById(id);
         }
 
-        public void PostCompany(Company company) {
-            repo.AddCompany(company);
+        public Company AddCompany(Company company) {
+            return repo.AddCompany(company);
         }
 
-        public void PutCompany(Company company) {
-            repo.UpdateCompany(company);
+        public Company PutCompany(Company company) {
+            return repo.UpdateCompany(company);
+        }
+
+        public IPODetails AddIPO(IPODetails iPO) {
+            return repo.AddIPO(iPO);
+        }
+
+        public IPODetails UpdateIPO(IPODetails iPO) {
+            return repo.UpdateIPO(iPO);
+        }
+
+        public List<DateTime> GetMissingStockPriceDates(string companyCode, DateTime startDate, DateTime endDate) {
+            List<DateTime> missingDates = new List<DateTime>();
+            for (DateTime date = startDate; date.Date <= endDate.Date; date = date.AddDays(1)) {
+                if (!repo.isStockPrice(companyCode, date)) missingDates.Add(date);
+            }
+            return missingDates;
+        }
+
+        public Company ActivateCompany(string companyCode) {
+            return repo.ActivateCompany(companyCode);
+        }
+
+        public Company DeactivateCompany(string companyCode) {
+            return repo.DeactivateCompany(companyCode);
         }
     }
 }
