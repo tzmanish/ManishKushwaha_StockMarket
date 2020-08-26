@@ -15,6 +15,11 @@ namespace AccountAPI.Repositories {
             return user;
         }
 
+        public void ConfirmEmail(long id) {
+            context.Users.Find(id).Confirmed = true;
+            context.SaveChanges();
+        }
+
         public User DeleteUser(long id) {
             User user = GetUserById(id);
             context.Users.Remove(user);

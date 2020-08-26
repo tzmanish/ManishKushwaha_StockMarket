@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Policy;
 using AccountAPI.Models;
 using AccountAPI.Repositories;
+using Microsoft.AspNetCore.Http;
 
 namespace AccountAPI.Services {
     public class AccountService : IAccountService {
@@ -34,6 +38,29 @@ namespace AccountAPI.Services {
 
         public bool isTaken(string username) {
             return repo.isUsernameExist(username);
+        }
+
+        public void ConfirmEmail(long id) {
+            repo.ConfirmEmail(id);
+        }
+
+        public void SendConfirmationEmail(string callbackUrl, string userEmail) {
+            string from = "mayankkushwaha226@gmail.com";
+            string password = "mayank226";
+            string to = userEmail;
+            string subject = "Account confirmation email.";
+            string body = $"Please click <a href = \"{callbackUrl}\">here</a> to confirm your email.";
+
+            MailMessage mailMessage = new MailMessage(from, to, subject, body);
+            mailMessage.IsBodyHtml = true;
+
+            NetworkCredential networkCredential = new NetworkCredential(from, password);
+
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.UseDefaultCredentials = true;
+            smtpClient.Credentials = networkCredential;
+            smtpClient.EnableSsl = true;
+            smtpClient.Send(mailMessage);
         }
     }
 }

@@ -10,5 +10,6 @@ namespace UserAPI.Services {
         public List<IPODetails> GetIPODetails(string CompanyCode);
         public List<StockPrice> GetStockPrices(string companyCode, DateTime start, DateTime end);
         public bool IsActive(string companyCode);
+        public List<IPODetails> GetIPODetails(int itemsPerPage, int pageNumber);
     }
 }

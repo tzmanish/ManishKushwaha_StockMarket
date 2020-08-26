@@ -59,7 +59,7 @@ namespace UserAPI.Controllers {
         }
 
         [HttpGet]
-        [Route("IPO/{companyCode}")]
+        [Route("IPO/company/{companyCode}")]
         public IActionResult GetIPODetails(string companyCode) {
             try {
                 if (!service.IsActive(companyCode)) return NotFound("No active company identified by "+companyCode);
@@ -70,7 +70,21 @@ namespace UserAPI.Controllers {
                 return StatusCode(500, ex.Message);
             }
         }
-        
+
+        [HttpGet]
+        [Route("IPO/{pageNumber:int=1}/{itemsPerPage:int=10}")]
+        public IActionResult GetIPODetails(int pageNumber, int itemsPerPage) {
+            try {
+                if (itemsPerPage <= 0 || pageNumber <= 0) 
+                    return BadRequest("'Items Per Page' and 'Page Number' shold be positive integers.");
+                List <IPODetails> details = service.GetIPODetails(itemsPerPage, pageNumber);
+                if (details.Any()) return Ok(details);
+                return NotFound("That's all, Come back later for more.");
+            } catch (Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpGet]
         [Route("StockPrices/{companyCode}/{startDate}/{endDate}")]
         public IActionResult GetStockPrices(string companyCode, DateTime startDate, DateTime endDate) {

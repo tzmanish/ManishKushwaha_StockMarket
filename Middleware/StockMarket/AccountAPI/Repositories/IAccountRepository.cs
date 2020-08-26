@@ -10,5 +10,6 @@ namespace AccountAPI.Repositories {
         List<User> GetAllUsers();
         User UpdateUser(User user);
         User GetUserById(long id);
+        void ConfirmEmail(long id);
     }
 }

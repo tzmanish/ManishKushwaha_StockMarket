@@ -59,5 +59,14 @@ namespace UserAPI.Repositories {
                     c.isActive == true
                 ).Any();
         }
+
+        public List<IPODetails> GetIPODetails(int itemsPerPage, int pageNumber) {
+            return context.IPODetails
+                .Where(ipo=>ipo.DateTime>= System.DateTime.Now)
+                .OrderBy(ipo => ipo.DateTime)
+                .Skip(pageNumber - 1)
+                .Take(itemsPerPage)
+                .ToList();
+        }
     }
 }

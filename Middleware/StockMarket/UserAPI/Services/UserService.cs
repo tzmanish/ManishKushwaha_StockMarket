@@ -33,5 +33,9 @@ namespace UserAPI.Services {
         public bool IsActive(string companyCode) {
             return repo.IsActive(companyCode);
         }
+
+        public List<IPODetails> GetIPODetails(int itemsPerPage, int pageNumber) {
+            return repo.GetIPODetails(itemsPerPage, pageNumber);
+        }
     }
 }

@@ -10,5 +10,7 @@ namespace AccountAPI.Services {
         User GetUser(long id);
         List<User> GetAllUsers();
         User UpdateUser(User user);
+        void ConfirmEmail(long id);
+        void SendConfirmationEmail(string callbackUrl, string userEmail);
     }
 }

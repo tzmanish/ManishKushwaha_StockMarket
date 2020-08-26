@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Mail;
 using AccountAPI.Models;
 using AccountAPI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -80,6 +82,29 @@ namespace AccountAPI.Controllers {
         public IActionResult UpdateUser(User user) {
             try {
                 return Ok(service.UpdateUser(user));
+            } catch (Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("Email/Send")]
+        public IActionResult SendConfirmationEmail(User user) {
+            try { 
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", user, protocol: HttpContext.Request.Scheme);
+                service.SendConfirmationEmail(callbackUrl, user.Email);
+                return Ok("Confirmation mail sent to " + user.Email);
+            } catch (Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("Email/Confirm")]
+        public IActionResult ConfirmEmail(User user) {
+            try {
+                service.ConfirmEmail(user.Id);
+                return Ok("email confirmed.");
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
