@@ -90,6 +90,8 @@ namespace AccountAPI.Controllers {
         [AllowAnonymous]
         public IActionResult AddUser(User user) {
             try {
+                if (service.isTaken(user.Email))
+                    return StatusCode(409, "An account already exist with this email address.");
                 user.Role = Role.user;
                 user.isConfirmed = false;
                 return Ok(service.AddUser(user));
