@@ -37,21 +37,21 @@ namespace AccountAPI.Controllers {
                 User user = service.Validate(credentials.Username, credentials.Password);
                 if (user == null)
                     return StatusCode(401, "Invalid Credentials.");
-                if(!user.Confirmed) {
+                if(!user.isConfirmed) {
                     SendConfirmationEmail(user);
                     return StatusCode(401, "A confirmation mail has been sent to your email, please confirm your email to access your profile.");
                 }
-                return Ok(GenerateJwtToken(user.Username, user.Role));
+                return Ok(GenerateJwtToken(user, user.Role));
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
         }
 
-        private Token GenerateJwtToken(string username, string role) {
+        private Token GenerateJwtToken(User user, string role) {
             List<Claim> claims = new List<Claim> {
-                new Claim(JwtRegisteredClaimNames.Sub, username),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, username),
+                new Claim(ClaimTypes.NameIdentifier, user.Username),
                 new Claim(ClaimTypes.Role, role)
             };
 
@@ -67,7 +67,7 @@ namespace AccountAPI.Controllers {
                 signingCredentials:credentials
             );
             Token response = new Token {
-                username = username,
+                user = user,
                 token = new JwtSecurityTokenHandler().WriteToken(Token)
             };
 
@@ -91,6 +91,7 @@ namespace AccountAPI.Controllers {
         public IActionResult AddUser(User user) {
             try {
                 user.Role = Role.user;
+                user.isConfirmed = false;
                 return Ok(service.AddUser(user));
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);

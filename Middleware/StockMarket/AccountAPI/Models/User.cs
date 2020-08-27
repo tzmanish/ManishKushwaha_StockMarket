@@ -15,7 +15,6 @@ namespace AccountAPI.Models {
         [StringLength(30)]
         public string Password { get; set; }
 
-        [Required]
         public string Role { get; set; }
 
         [Required]
@@ -25,8 +24,7 @@ namespace AccountAPI.Models {
         [StringLength(15)]
         public string Mobile { get; set; }
 
-        [Required]
-        public bool Confirmed { get; set; }
+        public bool isConfirmed { get; set; }
 
         //1. Id *
         //2. Username *

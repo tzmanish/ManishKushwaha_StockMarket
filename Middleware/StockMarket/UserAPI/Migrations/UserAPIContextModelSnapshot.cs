@@ -152,7 +152,6 @@ namespace UserAPI.Migrations
                         .HasMaxLength(30);
 
                     b.Property<string>("Role")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")

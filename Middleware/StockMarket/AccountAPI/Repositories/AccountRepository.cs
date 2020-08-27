@@ -16,7 +16,7 @@ namespace AccountAPI.Repositories {
         }
 
         public void ConfirmEmail(string username) {
-            context.Users.FirstOrDefault(u=>u.Username == username).Confirmed = true;
+            context.Users.FirstOrDefault(u=>u.Username == username).isConfirmed = true;
             context.SaveChanges();
         }
 

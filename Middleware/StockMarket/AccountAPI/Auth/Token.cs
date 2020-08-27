@@ -1,6 +1,8 @@
-﻿namespace AccountAPI {
+﻿using AccountAPI.Models;
+
+namespace AccountAPI {
     public class Token {
-        public string username { get; set; }
+        public User user { get; set; }
         public string token { get; set; }
     }
 }
