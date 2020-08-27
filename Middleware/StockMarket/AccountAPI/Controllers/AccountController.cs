@@ -94,7 +94,13 @@ namespace AccountAPI.Controllers {
                     return StatusCode(409, "An account already exist with this email address.");
                 user.Role = Role.user;
                 user.isConfirmed = false;
-                return Ok(service.AddUser(user));
+                service.AddUser(user);
+                try {
+                    SendConfirmationEmail(user);
+                    return Ok("Account registered successfully, an confirmation email has been sent to " + user.Email);
+                } catch {
+                    return Ok("Registration successful but was not able to send confirmation email, please try logging in later to receive confirmation mail.");
+                }
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }

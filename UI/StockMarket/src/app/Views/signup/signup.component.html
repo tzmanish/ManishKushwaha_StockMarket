@@ -1,42 +1,73 @@
 <div id="signup-form">
     <h2>Register</h2>
     <hr>
-    <div *ngIf="errMsg" class="alert alert-danger" role="alert">{{errMsg}}</div>
-    <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
+
+    <div 
+      *ngIf="errMsg" 
+      class="alert alert-danger" 
+      role="alert"
+    >{{errMsg}}</div>
+
+    <form 
+      #signupForm="ngForm" 
+      (ngSubmit)="onSubmit()"
+    >
+
       <div class="form-group">
         <label>Username*</label>
         <input 
           type="text" 
-          [(ngModel)]="user.username" 
+          [(ngModel)]="user.Username" 
           #username="ngModel"
           (keyup)="this.isTaken()"
-          [ngClass]="{'is-invalid': (username.errors || istaken) && username.touched, 
-                      'is-valid': !(username.errors || istaken) && username.touched}"
+          [ngClass]="{
+            'is-invalid': 
+              (username.errors || istaken) && 
+              username.touched, 
+            'is-valid': 
+              !(username.errors || istaken) && 
+              username.touched
+          }"
           class="form-control" 
           placeholder="Username"
           name="username"
           required
-          minlength="3"
+          pattern="^[a-zA-Z0-9_]{3,30}$"
         >
-        <div [hidden]="!username.errors?.required" class="invalid-feedback">
-          Username is required
+        <div 
+          [hidden]="!username.errors?.required" 
+          class="invalid-feedback"
+        > Username is required </div>
+        <div 
+          [hidden]="!username.errors?.pattern" 
+          class="invalid-feedback"
+        >
+          Username should be 3 to 30 characters long 
+          and only contains letters(a-z, A-Z), 
+          digits(0-9) and underscore(_).
         </div>
-        <div [hidden]="!username.errors?.minlength" class="invalid-feedback">
-          Username should be atleast 3 characters long
-        </div>
-        <div [hidden]="!this.istaken" class="invalid-feedback">
-          Username already taken
-        </div>
+        <div 
+          [hidden]="!this.istaken" 
+          class="invalid-feedback"
+        > Username already taken </div>
       </div>
 
       <div class="form-group">
         <label for="email">Email</label>
         <input 
           type="email"
-          [(ngModel)]="user.email" 
+          [(ngModel)]="user.Email" 
           #email="ngModel"
-          [ngClass]="{'is-invalid': email.errors && email.touched && user.email.length>0, 
-                      'is-valid': !email.errors && email.touched && user.email.length>0}"
+          [ngClass]="{
+            'is-invalid': 
+              email.errors && 
+              email.touched && 
+              user.Email.length>0, 
+            'is-valid': 
+              !email.errors && 
+              email.touched && 
+              user.Email.length>0
+          }"
           class="form-control"
           placeholder="Email-id"
           name="email"
@@ -51,10 +82,18 @@
         <label for="mobile">Phone</label>
         <input 
           type="tel" 
-          [(ngModel)]="user.mobile" 
+          [(ngModel)]="user.Mobile" 
           #mobile="ngModel"
-          [ngClass]="{'is-invalid': mobile.errors && mobile.touched && user.mobile.length>0, 
-                      'is-valid': !mobile.errors && mobile.touched && user.mobile.length>0}"
+          [ngClass]="{
+            'is-invalid': 
+              mobile.errors && 
+              mobile.touched && 
+              user.Mobile.length>0, 
+            'is-valid': 
+              !mobile.errors && 
+              mobile.touched && 
+              user.Mobile.length>0
+          }"
           class="form-control" 
           placeholder="Phone"
           name="mobile"
@@ -69,25 +108,37 @@
         <label for="password">Password*</label>
         <input 
           type="password" 
-          [(ngModel)]="user.password" 
+          [(ngModel)]="user.Password" 
           #password="ngModel"
-          [ngClass]="{'is-invalid': password.errors && password.touched, 
-                      'is-valid': !password.errors && password.touched}"
+          [ngClass]="{
+            'is-invalid': 
+              password.errors && 
+              password.touched, 
+            'is-valid': 
+              !password.errors && 
+              password.touched
+          }"
           class="form-control" 
           placeholder="Password"
           name="password"
           required
           minlength="6"
         >
-        <div [hidden]="!password.errors?.required" class="invalid-feedback">
-          Password is required
-        </div>
-        <div [hidden]="!password.errors?.minlength" class="invalid-feedback">
-          Password should be atleast 6 characters long
-        </div>
+        <div 
+          [hidden]="!password.errors?.required" 
+          class="invalid-feedback"
+        > Password is required </div>
+        <div 
+          [hidden]="!password.errors?.minlength" 
+          class="invalid-feedback"
+        > Password should be atleast 6 characters long </div>
       </div>
 
-      <button [disabled]="!signupForm.form.valid || istaken" class="btn btn-primary" >Register</button>
+      <button 
+        [disabled]="!signupForm.form.valid || istaken" 
+        class="btn btn-primary" 
+      >Register</button>
+
       <a routerLink="/login" class="btn">Login</a>
     </form>
 </div>

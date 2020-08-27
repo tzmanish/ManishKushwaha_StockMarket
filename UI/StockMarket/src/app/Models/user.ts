@@ -1,9 +1,9 @@
-export class User {
-    id?:number;
-    username:string;
-    password?:string;
-    isAdmin?:boolean;
-    email?:string;
-    mobile?:string;
-    confirmed?:boolean;
+export interface User {
+    Id?:number;
+    Username:string;
+    Password?:string;
+    Role?:string;
+    Email?:string;
+    Mobile?:string;
+    Confirmed?:boolean;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AccountService } from 'src/app/Services/account.service';
 import { User } from 'src/app/Models/user';
-import { NgForm, ValidationErrors } from '@angular/forms';
+import { NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -19,10 +19,11 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = {
-      username:'',
-      password:'',
-      email:'',
-      mobile:''
+      Username:'',
+      Password:'',
+      Role:"",
+      Email:'',
+      Mobile:''
     }
     this.errMsg = "";
   }
@@ -32,18 +33,27 @@ export class SignupComponent implements OnInit {
       this.errMsg = "Username already taken";
     } 
 
-    this.service.register(this.form.value).subscribe(response => {
-      console.log("success");
-      //navigate to home
-    }, err => {
-      if(err.status == 0) this.errMsg = "Connection lost with server, please try again later."
-      else this.errMsg = "Unknown error."
-    });
+    this.service
+      .register(this.form.value)
+      .subscribe(response => {
+        console.log(response);
+        this.resetForm();
+        //navigate to home
+      }, err => {
+        this.errMsg = 
+          (err.error.text) ? 
+            err.error.text : 
+            err.error.error.message ? 
+                `${err.status} - ${err.error.error.message}` : 
+                err.status?
+                `${err.status} - ${err.statusText}` : 
+                'Server error';
+      });
   }
 
   public isTaken():void{
-    if(this.user.username.length<3) this.istaken = false;
-    else this.service.isTaken(this.user.username)
+    if(this.user.Username.length<3) this.istaken = false;
+    else this.service.isTaken(this.user.Username)
       .subscribe(taken=>{
         this.istaken =  (taken === true);
       }, err=>{
@@ -51,4 +61,7 @@ export class SignupComponent implements OnInit {
       });
   }
 
+  public resetForm(){
+    this.errMsg = "";
+  }
 }

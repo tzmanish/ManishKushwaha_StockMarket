@@ -12,12 +12,12 @@ export class AccountService {
 
   constructor(private http:HttpClient) { }
 
-  public authenticate(username:string, password:string):Observable<User> {
-    return this.http.get<User>(`${this.path}/Account/Validate/${username}/${password}`);
+  public authenticate(user:User) {
+    return this.http.post(`${this.path}/Account/Validate`, user, {responseType: 'text'});
   }
 
   public register(user:User) {
-    return this.http.post(`${this.path}/Account`, user);
+    return this.http.post(`${this.path}/Account/Add`, user);
   }
 
   public isTaken(username:string):Observable<boolean>{
