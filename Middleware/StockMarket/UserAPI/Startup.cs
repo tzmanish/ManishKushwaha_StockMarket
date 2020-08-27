@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using UserAPI.Data;
 using UserAPI.Repositories;
 using UserAPI.Services;
@@ -27,6 +28,10 @@ namespace UserAPI {
             services.AddDbContext<UserAPIContext>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRepository, UserRepository>();
+
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "user-api", Version = "v1" });
+            });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options => {
@@ -58,6 +63,11 @@ namespace UserAPI {
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "user-api v1");
+            });
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();

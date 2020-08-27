@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -16,6 +17,7 @@ namespace APIGateway {
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services) {
             services.AddOcelot(Configuration);
+
             services.AddCors(C => {
                 C.AddPolicy("AllowOrigin", options =>
                     options.AllowAnyOrigin()
@@ -32,13 +34,12 @@ namespace APIGateway {
             }
 
             app.UseRouting();
+
             app.UseCors("AllowOrigin");
-            app.UseEndpoints(endpoints => {
-                //endpoints.MapGet("/", async context => {
-                //    await context.Response.WriteAsync("Hello World!");
-                //});
-            });
+
             app.UseOcelot();
+
+            app.UseEndpoints(endpoints => {});
         }
     }
 }

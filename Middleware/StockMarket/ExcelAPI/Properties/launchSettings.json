@@ -12,7 +12,7 @@
     "IIS Express": {
         "commandName": "IISExpress",
         "launchBrowser": true,
-        "launchUrl": "api/Excel/upload/",
+        "launchUrl": "swagger/index.html",
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development"
         }
@@ -20,8 +20,8 @@
     "ExcelAPI": {
         "commandName": "Project",
         "launchBrowser": true,
-        "launchUrl": "weatherforecast",
-        "applicationUrl": "api/Excel/upload/",
+        "launchUrl": "swagger/index.html",
+        "applicationUrl": "http://localhost:5000",
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development"
         }

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace ExcelAPI {
     public class Startup {
@@ -27,6 +28,10 @@ namespace ExcelAPI {
             services.AddDbContext<ExcelAPIContext>();
             services.AddTransient<IExcelRepositiory, ExcelRepository>();
             services.AddTransient<IExcelService, ExcelService>();
+
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "excel-api", Version = "v1" });
+            });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options => {
@@ -56,6 +61,11 @@ namespace ExcelAPI {
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "excel-api v1");
+            });
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
