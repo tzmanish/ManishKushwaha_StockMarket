@@ -142,8 +142,7 @@ namespace AccountAPI.Controllers {
         public IActionResult SendConfirmationEmail(User user) {
             try {
                 string token = GenerateEmailConfirmationToken(user.Username);
-                string escapedToken = HttpUtility.UrlEncode(token);
-                string callbackUrl = $"http://localhost:65283/Account/Email/confirm/{escapedToken}";
+                string callbackUrl = $"http://localhost:65283/Account/Email/confirm/{token}";
 
                 service.SendConfirmationEmail(callbackUrl, user.Email);
                 return Ok("Confirmation mail sent to " + user.Email);
@@ -152,55 +151,18 @@ namespace AccountAPI.Controllers {
             }
         }
 
-        private string GenerateEmailConfirmationToken(string username, int expiresIn=5) {
-
-            List<Claim> claims = new List<Claim> {
-                new Claim(ClaimTypes.NameIdentifier, username)
-            };
-
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtKey"]));
-            SigningCredentials credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            DateTime expires = DateTime.Now.AddMinutes(expiresIn);
-            JwtSecurityToken Token = new JwtSecurityToken(
-                configuration["JwtIssuer"],
-                configuration["JwtIssuer"],
-                claims,
-                expires: expires,
-                signingCredentials: credentials
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(Token);
+        private string GenerateEmailConfirmationToken(string username) {
+            return username;
         }
 
         private string ValidateEmailConfirmationToken(string token) {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtKey"]));
-            try {
-                tokenHandler.ValidateToken(token, new TokenValidationParameters {
-                    ValidateIssuerSigningKey = true,
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidIssuer = configuration["JwtIssuer"],
-                    ValidAudience = configuration["JwtIssuer"],
-                    IssuerSigningKey = securityKey
-                }, out SecurityToken validatedToken);
-            }catch {
-                throw new Exception("Your token is not valid, it may have expired.");
-            }
-
-
-            var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
-
-            var stringClaimValue = securityToken.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
-            return stringClaimValue;
+            return token;
         }
 
         [HttpGet]
         [Route("Email/Confirm/{token}")]
         [AllowAnonymous]
-        public IActionResult ConfirmEmail(string encodedToken) {
-            string token = HttpUtility.UrlDecode(encodedToken);
+        public IActionResult ConfirmEmail(string token) {
             try {
                 string username = ValidateEmailConfirmationToken(token);
                 service.ConfirmEmail(username);

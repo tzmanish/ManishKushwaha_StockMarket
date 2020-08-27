@@ -45,8 +45,8 @@ namespace AccountAPI.Services {
         }
 
         public void SendConfirmationEmail(string callbackUrl, string userEmail) {
-            string from = "mayankkushwaha226@gmail.com";
-            string password = "mayank226";
+            string from = "";   //email here
+            string password = "";   //password here
             string to = userEmail;
             string subject = "Account confirmation email.";
             string body = $"Please click <a href = \"{callbackUrl}\">here</a> to confirm your email.";
