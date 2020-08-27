@@ -340,4 +340,4 @@ ASALocalRun/
 healthchecksdb
 
 # Email credentials
-./Middleware/StockMarket/AccountAPI/MailCredentials.cs
+Middleware/StockMarket/AccountAPI/MailCredentials.cs
