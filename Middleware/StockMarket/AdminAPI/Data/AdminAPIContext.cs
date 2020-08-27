@@ -15,5 +15,14 @@ namespace AdminAPI.Data {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockMarketDB;Integrated Security=True");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique(true);
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique(true);
+        }
     }
 }

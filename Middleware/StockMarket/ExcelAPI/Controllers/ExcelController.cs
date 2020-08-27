@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using ExcelAPI.Models;
 using ExcelAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace ExcelAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ExcelController : ControllerBase {
         private IExcelService service;
         public ExcelController(IExcelService service) {
@@ -15,6 +17,7 @@ namespace ExcelAPI.Controllers {
         }
 
         [HttpGet]
+        [Authorize(Roles ="admin")]
         [Route("Upload/{worksheet}/{*filePath}")]
         public IActionResult UploadExcel(string worksheet, string filePath) {
             try {

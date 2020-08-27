@@ -20,8 +20,9 @@ namespace AdminAPI.Models {
         public string Password { get; set; }
 
         [Required]
-        public bool IsAdmin { get; set; }
+        public string Role { get; set; }
 
+        [Required]
         [StringLength(30)]
         public string Email { get; set; }
 

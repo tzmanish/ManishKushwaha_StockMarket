@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using AdminAPI.Models;
 using AdminAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
 namespace AdminAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class AdminController : ControllerBase{
         private IAdminService service;
         public AdminController(IAdminService service) {

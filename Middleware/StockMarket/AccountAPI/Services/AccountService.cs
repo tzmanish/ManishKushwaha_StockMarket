@@ -40,8 +40,8 @@ namespace AccountAPI.Services {
             return repo.isUsernameExist(username);
         }
 
-        public void ConfirmEmail(long id) {
-            repo.ConfirmEmail(id);
+        public void ConfirmEmail(string username) {
+            repo.ConfirmEmail(username);
         }
 
         public void SendConfirmationEmail(string callbackUrl, string userEmail) {
