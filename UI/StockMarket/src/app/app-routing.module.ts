@@ -4,11 +4,13 @@ import { LoginComponent } from './Views/login/login.component';
 import { SignupComponent } from './Views/signup/signup.component';
 import { NotFoundComponent } from './Views/not-found/not-found.component';
 import { NavbarComponent } from './Views/navbar/navbar.component';
+import { HomeComponent } from './Views/home/home.component';
 
 
 const routes: Routes = [
   {path:'login', component:LoginComponent},
   {path:'register', component:SignupComponent},
+  {path:'', component:HomeComponent},
   {path:'**', component:NotFoundComponent}
 ];
 

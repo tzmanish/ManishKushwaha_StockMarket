@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, pipe} from 'rxjs';
+import { map } from 'rxjs/operators';
 import { User } from '../Models/user';
 import { environment } from 'src/environments/environment';
 
@@ -12,8 +13,8 @@ export class AccountService {
 
   constructor(private http:HttpClient) { }
 
-  public authenticate(user:User) {
-    return this.http.post(`${this.path}/Account/Validate`, user, {responseType: 'text'});
+  public authenticate(user:User): Observable<any> {
+    return this.http.post(`${this.path}/Account/Validate`, user);
   }
 
   public register(user:User) {

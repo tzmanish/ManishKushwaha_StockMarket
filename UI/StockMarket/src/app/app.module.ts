@@ -10,6 +10,7 @@ import { AccountService } from './Services/account.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundComponent } from './Views/not-found/not-found.component';
 import { NavbarComponent } from './Views/navbar/navbar.component';
+import { HomeComponent } from './Views/home/home.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { NavbarComponent } from './Views/navbar/navbar.component';
     LoginComponent,
     SignupComponent,
     NotFoundComponent,
-    NavbarComponent
+    NavbarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

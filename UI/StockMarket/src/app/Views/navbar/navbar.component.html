@@ -1,26 +1,29 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" routerLink="">{{isAdmin? "Admin": "User"}}</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <a class="navbar-brand" routerLink="">{{role}}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-      <ul class="navbar-nav mr-auto" *ngIf="!isAdmin">
+      <ul class="navbar-nav mr-auto" *ngIf="role=='user'">
         <li class="nav-item">
-          <a class="nav-link">UserHome</a>
+          <a class="nav-link">IPOs</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link">UserHome</a>
+          <a class="nav-link">Compare Company</a>
         </li>
       </ul>
 
-      <ul class="navbar-nav mr-auto" *ngIf="isAdmin">
+      <ul class="navbar-nav mr-auto" *ngIf="role=='admin'">
         <li class="nav-item">
-          <a class="nav-link">AdminHome</a>
+          <a class="nav-link">Import Data</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link">AdminHome</a>
+          <a class="nav-link">Manage Company</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">Update IPO Details</a>
         </li>
       </ul>
 
@@ -29,7 +32,7 @@
           <a class="nav-link">{{username}}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link">Logout</a>
+          <a href="javascript:void(0)" class="nav-link" (click)="logout()">Logout</a>
         </li>
       </ul>
     </div>

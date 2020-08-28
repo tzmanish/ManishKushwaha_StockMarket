@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AccountService } from 'src/app/Services/account.service';
 import { User } from 'src/app/Models/user';
 import { NgForm} from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('loginForm') form:NgForm;
   errMsg:string;
 
-  constructor(private service:AccountService) { }
+  constructor(private service:AccountService, private router: Router) { }
 
   ngOnInit(): void {
     this.user = {
@@ -24,24 +26,28 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
+    this.lockForm();
     this.service
       .authenticate(this.user)
-      .subscribe(U=>{
-        console.log(U);
-        this.resetForm();
-        // Set session
-        // redirect to homepage
+      .subscribe(Response=>{
+        localStorage.setItem("session", JSON.stringify(Response));
+        this.router.navigateByUrl("");
       },err=>{
         this.resetForm();
         this.errMsg = 
         (err.error.text) ? 
           err.error.text : 
-          err.error.error.message ? 
+          (err.error.error.message) ? 
               `${err.status} - ${err.error.error.message}` : 
-              err.status?
+              (err.status)?
               `${err.status} - ${err.statusText}` : 
               'Server error';
       });
+  }
+
+  public lockForm(){
+    this.errMsg = "";
+    // this.loginForm.reset();
   }
 
   public resetForm(){

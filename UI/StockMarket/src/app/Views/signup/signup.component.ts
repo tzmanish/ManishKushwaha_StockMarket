@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AccountService } from 'src/app/Services/account.service';
 import { User } from 'src/app/Models/user';
 import { NgForm} from '@angular/forms';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
@@ -12,6 +13,7 @@ import { NgForm} from '@angular/forms';
 export class SignupComponent implements OnInit {
   user:User;
   istaken:boolean = false;
+  locked:boolean = true;
   @ViewChild('signupForm') form:NgForm;
   errMsg:string;
 
@@ -31,8 +33,7 @@ export class SignupComponent implements OnInit {
   onSubmit(){
     if(this.isTaken(), this.istaken){
       this.errMsg = "Username already taken";
-    } 
-
+    }
     this.service
       .register(this.form.value)
       .subscribe(response => {
