@@ -8,11 +8,14 @@ import { User } from 'src/app/Models/user';
 })
 export class HomeComponent implements OnInit {
   username:string;
+  role:string;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.username = JSON.parse(localStorage.getItem("session")).user.username;
+    const user = JSON.parse(localStorage.getItem("session")).user;
+    this.username = user.username;
+    this.role = user.role;
   }
 
 }

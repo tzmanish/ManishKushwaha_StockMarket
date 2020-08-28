@@ -11,6 +11,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundComponent } from './Views/not-found/not-found.component';
 import { NavbarComponent } from './Views/navbar/navbar.component';
 import { HomeComponent } from './Views/home/home.component';
+import { EditProfileComponent } from './Views/edit-profile/edit-profile.component';
+import { IPOComponent } from './Views/User/ipo/ipo.component';
+import { CompareCompanyComponent } from './Views/User/compare-company/compare-company.component';
+import { ImportExcelComponent } from './Views/Admin/import-excel/import-excel.component';
+import { ManageCompanyComponent } from './Views/Admin/manage-company/manage-company.component';
+import { UpdateIPOComponent } from './Views/Admin/update-ipo/update-ipo.component';
+import { ManageAccountComponent } from './Views/Admin/manage-account/manage-account.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +26,14 @@ import { HomeComponent } from './Views/home/home.component';
     SignupComponent,
     NotFoundComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    EditProfileComponent,
+    IPOComponent,
+    CompareCompanyComponent,
+    ImportExcelComponent,
+    ManageCompanyComponent,
+    UpdateIPOComponent,
+    ManageAccountComponent
   ],
   imports: [
     BrowserModule,
