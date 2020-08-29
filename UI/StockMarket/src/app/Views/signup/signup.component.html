@@ -2,22 +2,15 @@
     <h2>Register</h2>
     <hr>
 
-    <div 
-      *ngIf="errMsg" 
-      class="alert alert-danger" 
-      role="alert"
-    >{{errMsg}}</div>
-
     <form 
       #signupForm="ngForm" 
       (ngSubmit)="onSubmit()"
     >
-
       <div class="form-group">
         <label>Username*</label>
         <input 
           type="text" 
-          [(ngModel)]="user.Username" 
+          [(ngModel)]="user.username" 
           #username="ngModel"
           (keyup)="this.isTaken()"
           [ngClass]="{
@@ -57,17 +50,11 @@
         <label for="email">Email*</label>
         <input 
           type="email"
-          [(ngModel)]="user.Email" 
+          [(ngModel)]="user.email" 
           #email="ngModel"
           [ngClass]="{
-            'is-invalid': 
-              email.errors && 
-              email.touched && 
-              user.Email.length>0, 
-            'is-valid': 
-              !email.errors && 
-              email.touched && 
-              user.Email.length>0
+            'is-invalid': email.errors && email.touched, 
+            'is-valid': !email.errors && email.touched
           }"
           class="form-control"
           placeholder="Email-id"
@@ -78,7 +65,7 @@
         <div 
           [hidden]="!email.errors?.required" 
           class="invalid-feedback"
-        > Username is required </div>
+        > Email is required </div>
         <div 
           [hidden]="!email.errors?.pattern"
           class="invalid-feedback"
@@ -89,17 +76,17 @@
         <label for="mobile">Phone</label>
         <input 
           type="tel" 
-          [(ngModel)]="user.Mobile" 
+          [(ngModel)]="user.mobile" 
           #mobile="ngModel"
           [ngClass]="{
             'is-invalid': 
               mobile.errors && 
               mobile.touched && 
-              user.Mobile.length>0, 
+              user.mobile, 
             'is-valid': 
               !mobile.errors && 
               mobile.touched && 
-              user.Mobile.length>0
+              user.mobile
           }"
           class="form-control" 
           placeholder="Phone"
@@ -115,7 +102,7 @@
         <label for="password">Password*</label>
         <input 
           type="password" 
-          [(ngModel)]="user.Password" 
+          [(ngModel)]="user.password" 
           #password="ngModel"
           [ngClass]="{
             'is-invalid': 
@@ -142,9 +129,17 @@
       </div>
 
       <button 
-        [disabled]="!signupForm.form.valid || istaken" 
+        [disabled]="!signupForm.form.valid || istaken || loading" 
         class="btn btn-primary" 
-      >Register</button>
+      >
+        Register
+        <span 
+            class="spinner-border spinner-border-sm" 
+            role="status" 
+            aria-hidden="true"
+            *ngIf="loading"
+          ></span>
+      </button>
 
       <a routerLink="/login" class="btn">Login</a>
     </form>

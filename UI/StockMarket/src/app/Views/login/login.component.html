@@ -2,22 +2,16 @@
     <h2>Login</h2>
     <hr>
 
-    <div 
-      *ngIf="errMsg" 
-      class="alert alert-danger" 
-      role="alert"
-    >{{errMsg}}</div>
-
     <form 
       #loginForm = "ngForm" 
-      (ngSubmit)="onSubmit()"
+      (ngSubmit)="onSubmit(this.user)"
     >
 
         <div class="form-group">
           <label>Username*</label>
           <input 
             type="text" 
-            [(ngModel)]="user.Username"
+            [(ngModel)]="this.user.username"
             #username = "ngModel"
             [ngClass]="{
               'is-invalid': 
@@ -49,7 +43,7 @@
           <label for="password">Password*</label>
           <input 
             type="password" 
-            [(ngModel)]="user.Password"
+            [(ngModel)]="this.user.password"
             #password = "ngModel"
             [ngClass]="{
               'is-invalid': 
@@ -67,9 +61,18 @@
           > Password is required </div>
         </div>
 
-        <button
-          class="btn btn-primary"
-        >Login</button>
+        <button 
+          class="btn btn-primary" 
+          [disabled]="!loginForm.form.valid || loading"
+        >
+          Login
+          <span 
+            class="spinner-border spinner-border-sm" 
+            role="status" 
+            aria-hidden="true"
+            *ngIf="this.loading"
+          ></span>
+        </button>
 
         <a routerLink="/register" class="btn">Register</a> 
     </form>

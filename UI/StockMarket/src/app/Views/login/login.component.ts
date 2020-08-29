@@ -3,6 +3,7 @@ import { AccountService } from 'src/app/Services/account.service';
 import { User } from 'src/app/Models/user';
 import { NgForm} from '@angular/forms';
 import { Router } from '@angular/router';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 
 @Component({
@@ -12,46 +13,39 @@ import { Router } from '@angular/router';
 })
 
 export class LoginComponent implements OnInit {
-  user:User;
+  user:User = <User>{ };
   @ViewChild('loginForm') form:NgForm;
-  errMsg:string;
+  loading:boolean = false;
 
-  constructor(private service:AccountService, private router: Router) { }
+  constructor(
+    private service:AccountService, 
+    private router: Router, 
+    private flashMessage: FlashMessagesService
+  ) { }
 
   ngOnInit(): void {
-    this.user = {
-      Username:'',
-      Password:''
-    }
+    this.service.isLoggedIn().subscribe(()=>{
+      this.flashMessage.show( "You're already logged in.", {cssClass: 'alert-warning', timeout: 4000} );
+      this.router.navigateByUrl("");
+    }, ()=>{});
   }
 
-  onSubmit(){
-    this.lockForm();
+  onSubmit(user:User){
+    console.log(user);
+    this.loading = true;
     this.service
-      .authenticate(this.user)
+      .authenticate(user)
       .subscribe(Response=>{
         localStorage.setItem("session", JSON.stringify(Response));
         this.router.navigateByUrl("");
       },err=>{
+        console.log(err);
         this.resetForm();
-        this.errMsg = 
-        (err.error.text) ? 
-          err.error.text : 
-          (err.error.error.message) ? 
-              `${err.status} - ${err.error.error.message}` : 
-              (err.status)?
-              `${err.status} - ${err.statusText}` : 
-              'Server error';
       });
-  }
-
-  public lockForm(){
-    this.errMsg = "";
-    // this.loginForm.reset();
+    this.loading = false;
   }
 
   public resetForm(){
-    this.errMsg = "";
-    // this.loginForm.reset();
+    this.user = <User>{};
   }
 }

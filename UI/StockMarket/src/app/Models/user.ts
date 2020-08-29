@@ -1,9 +1,9 @@
 export interface User {
-    Id?:number;
-    Username:string;
-    Password?:string;
-    Role?:string;
-    Email?:string;
-    Mobile?:string;
-    Confirmed?:boolean;
+    id?:number;
+    username:string;
+    password?:string;
+    role?:string;
+    email?:string;
+    mobile?:string;
+    confirmed?:boolean;
 }

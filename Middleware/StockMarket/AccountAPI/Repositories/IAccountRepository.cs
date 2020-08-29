@@ -11,5 +11,6 @@ namespace AccountAPI.Repositories {
         User UpdateUser(User user);
         User GetUserById(long id);
         void ConfirmEmail(string username);
+        bool isEmailExist(string email);
     }
 }

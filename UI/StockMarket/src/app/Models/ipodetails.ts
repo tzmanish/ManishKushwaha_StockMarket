@@ -1,9 +1,9 @@
 export interface IPODetails {
-    Id:number;
-    CompanyCode:string;
-    StockExchange:string;
-    PricePerShare:number;
-    TotalShares:number;
-    DateTime?:Date;
-    Remrks?:string;
+    id:number;
+    companyCode:string;
+    stockExchange:string;
+    pricePerShare:number;
+    totalShares:number;
+    dateTime?:Date;
+    remrks?:string;
 }

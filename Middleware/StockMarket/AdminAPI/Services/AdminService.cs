@@ -53,5 +53,9 @@ namespace AdminAPI.Services {
         public Company DeactivateCompany(string companyCode) {
             return repo.DeactivateCompany(companyCode);
         }
+
+        public object isTaken(string companyCode) {
+            return repo.isCompanyCodeExist(companyCode);
+        }
     }
 }

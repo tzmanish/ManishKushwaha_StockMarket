@@ -22,5 +22,6 @@ namespace AdminAPI.Services {
         );
         public Company ActivateCompany(string companyCode);
         public Company DeactivateCompany(string companyCode);
+        object isTaken(string companyCode);
     }
 }

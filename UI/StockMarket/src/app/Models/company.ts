@@ -1,11 +1,12 @@
 export interface Company {
-    CompanyCode:string;
-    CompanyName:string;
-    Turnover?:number;
-    CEO?:string;
-    Brief?:string;
-    Sector?:string;
-    BoardOfDirectors?:string;
-    StockExchanges?:string;
+    formVisible?: boolean;
+    companyCode:string;
+    companyName:string;
+    turnover?:number;
+    ceo?:string;
+    brief?:string;
+    sector?:string;
+    boardOfDirectors?:string;
+    stockExchanges?:string;
     isActive?:boolean;
 }

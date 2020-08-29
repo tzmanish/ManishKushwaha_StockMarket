@@ -127,5 +127,16 @@ namespace AdminAPI.Controllers {
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("Companies/isTaken/{companyCode}")]
+        public IActionResult isTaken(string companyCode) {
+            try {
+                return Ok(service.isTaken(companyCode));
+            } catch (Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

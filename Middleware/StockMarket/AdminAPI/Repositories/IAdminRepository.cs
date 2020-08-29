@@ -14,5 +14,6 @@ namespace AdminAPI.Repositories {
         public bool isStockPrice(string companyCode, DateTime date);
         public Company ActivateCompany(string companyCode);
         public Company DeactivateCompany(string companyCode);
+        object isCompanyCodeExist(string companyCode);
     }
 }

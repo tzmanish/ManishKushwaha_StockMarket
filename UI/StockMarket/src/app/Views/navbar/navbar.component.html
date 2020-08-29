@@ -5,7 +5,7 @@
   bg-light 
   mb-4
 ">
-  <a class="navbar-brand" routerLink="">{{role}}</a>
+  <a class="navbar-brand" routerLink="">{{user?.role}}-portal</a>
   <button 
     class="navbar-toggler" 
     type="button" data-toggle="collapse" 
@@ -19,7 +19,7 @@
     class="collapse navbar-collapse" 
     id="navbarSupportedContent"
   >
-    <ul class="navbar-nav mr-auto" *ngIf="role=='user'">
+    <ul class="navbar-nav mr-auto" *ngIf="user?.role=='user'">
       <li class="nav-item"  routerLinkActive="active">
         <a class="nav-link" routerLink="user/ipos">
           IPOs
@@ -32,7 +32,7 @@
       </li>
     </ul>
 
-    <ul class="navbar-nav mr-auto" *ngIf="role=='admin'">
+    <ul class="navbar-nav mr-auto" *ngIf="user?.role=='admin'">
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="admin/excel">
           Import Excel Data
@@ -58,7 +58,8 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item"  routerLinkActive="active">
         <a class="nav-link" routerLink="profile">
-          <i class="fa fa-user" aria-hidden="true"></i>{{username}}
+          <i class="fa fa-user" aria-hidden="true"></i>
+          {{user?.username}}
         </a>
       </li>
       <li class="nav-item">
@@ -66,7 +67,10 @@
           href="javascript:void(0)" 
           class="nav-link" 
           (click)="logout()"
-        ><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+        >
+          <i class="fa fa-sign-out" aria-hidden="true"></i>
+          Logout
+        </a>
       </li>
     </ul>
   </div>

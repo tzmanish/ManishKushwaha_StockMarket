@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Web;
 using AccountAPI.Auth;
 using AccountAPI.Models;
 using AccountAPI.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
@@ -79,7 +75,7 @@ namespace AccountAPI.Controllers {
         [Route("isTaken/{username}")]
         public IActionResult isTaken(string username) {
             try {
-                return Ok(service.isTaken(username));
+                return Ok(service.isUsernameTaken(username));
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
@@ -90,7 +86,7 @@ namespace AccountAPI.Controllers {
         [AllowAnonymous]
         public IActionResult AddUser(User user) {
             try {
-                if (service.isTaken(user.Email))
+                if (service.isEmailTaken(user.Email))
                     return StatusCode(409, "An account already exist with this email address.");
                 user.Role = Role.user;
                 user.isConfirmed = false;
@@ -179,6 +175,12 @@ namespace AccountAPI.Controllers {
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
+        }
+
+        [HttpGet]
+        [Route("Validate")]
+        public IActionResult ValidateToken() {
+            return Ok();
         }
     }
 }

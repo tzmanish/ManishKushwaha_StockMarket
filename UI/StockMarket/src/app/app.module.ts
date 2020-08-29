@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FlashMessagesModule } from 'angular2-flash-messages';
 import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,6 +39,7 @@ import { ManageAccountComponent } from './Views/Admin/manage-account/manage-acco
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FlashMessagesModule.forRoot(),
     FormsModule,
     ReactiveFormsModule
   ],

@@ -39,6 +39,10 @@ namespace AccountAPI.Repositories {
             return context.Users.Where(U => U.Username == username).Any();
         }
 
+        public bool isEmailExist(string email) {
+            return context.Users.Where(U => U.Email == email).Any();
+        }
+
         public User UpdateUser(User user) {
             context.Users.Update(user);
             context.SaveChanges();

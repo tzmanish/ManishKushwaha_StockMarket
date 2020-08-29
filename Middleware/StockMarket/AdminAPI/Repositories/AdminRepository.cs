@@ -71,5 +71,9 @@ namespace AdminAPI.Repositories {
             context.SaveChanges();
             return company;
         }
+
+        public object isCompanyCodeExist(string companyCode) {
+            return context.Companies.Where(C => C.CompanyCode == companyCode).Any();
+        }
     }
 }

@@ -36,8 +36,12 @@ namespace AccountAPI.Services {
             return repo.GetAllUsers();
         }
 
-        public bool isTaken(string username) {
+        public bool isUsernameTaken(string username) {
             return repo.isUsernameExist(username);
+        }
+
+        public bool isEmailTaken(string email) {
+            return repo.isEmailExist(email);
         }
 
         public void ConfirmEmail(string username) {
