@@ -12,23 +12,24 @@ import { AccountService } from 'src/app/Services/account.service';
 export class NavbarComponent implements OnInit {
   user:User;
 
-  constructor(
-    private router:Router, 
-    private service:AccountService,
-    private flashMessages: FlashMessagesService
+  constructor( 
+    private router:Router,
+    private flashMessages: FlashMessagesService,
+    public service: AccountService
   ) { }
 
   ngOnInit(): void {
-    this.service.isLoggedIn().subscribe(
-      () => this.user = JSON.parse(localStorage.getItem("session")).user, 
-      () => this.router.navigateByUrl("login")
-    );
   }
 
   logout(){
-    localStorage.clear();
+    this.service.logout();
     this.flashMessages.show('You are now logged out.', { cssClass: 'alert-info'});
     this.router.navigateByUrl("login");
+  }
+
+  getUserData():boolean {
+    this.user = JSON.parse(localStorage.getItem("session"))?.user;
+    return true;
   }
 
 }

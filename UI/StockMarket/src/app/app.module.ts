@@ -20,6 +20,7 @@ import { UpdateIPOComponent } from './Views/Admin/update-ipo/update-ipo.componen
 import { ManageAccountComponent } from './Views/Admin/manage-account/manage-account.component';
 import { BackButtonComponent } from './Views/back-button/back-button.component';
 import { AuthInterceptor } from './Interceptors/auth-interceptor';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,8 @@ import { AuthInterceptor } from './Interceptors/auth-interceptor';
   ],
   providers: [
     AccountService,
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

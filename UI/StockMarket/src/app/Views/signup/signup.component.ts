@@ -26,9 +26,18 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  showAlert(alertClass:string, message: string|any):void{
+    let errMsg = typeof message === "string"? message :
+      (message.error?.text) ? message.error.text : 
+            message.error.error?.message ? `${message.status} - ${message.error.error.message}` : 
+              message.status? `${message.status} - ${message.statusText}` : 
+              'Server error';
+    this.flashMessage.show(errMsg, {cssClass: `alert-${alertClass}`, timeout: 4000});
+  }
+
   onSubmit(){
     if(this.isTaken(), this.istaken){
-      console.log("Username already taken");
+      this.showAlert("danger", "Username already taken");
     }
     this.service
       .register(this.form.value)
@@ -38,13 +47,7 @@ export class SignupComponent implements OnInit {
           {cssClass: 'alert-success', timeout: 4000}
         );
         this.router.navigateByUrl("login");
-      }, err => {
-        let errMsg = (err.error?.text) ? err.error.text : 
-          err.error.error?.message ? `${err.status} - ${err.error.error.message}` : 
-            err.status? `${err.status} - ${err.statusText}` : 
-            'Server error'
-        this.flashMessage.show(errMsg, {cssClass: 'alert-danger', timeout: 4000});
-      });
+      }, err => this.showAlert("danger", err));
   }
 
   public isTaken():void{
@@ -52,7 +55,7 @@ export class SignupComponent implements OnInit {
     else this.service.isTaken(this.user.username)
       .subscribe(taken=>this.istaken =  (taken === true), err=>{
         this.istaken = false;   //Can't check.
-        console.log(err);
+        this.showAlert("danger", err);
       });
   }
 }

@@ -7,15 +7,12 @@ import { User } from 'src/app/Models/user';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  username:string;
-  role:string;
+  user:User;
 
   constructor() { }
 
   ngOnInit(): void {
-    const user = JSON.parse(localStorage.getItem("session")).user;
-    this.username = user.username;
-    this.role = user.role;
+    this.user = JSON.parse(localStorage.getItem("session"))?.user;
   }
 
 }

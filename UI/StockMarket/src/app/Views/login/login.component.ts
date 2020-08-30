@@ -5,7 +5,6 @@ import { NgForm} from '@angular/forms';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -24,10 +23,10 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.service.isLoggedIn().subscribe(()=>{
-      this.flashMessage.show( "You're already logged in.", {cssClass: 'alert-warning', timeout: 4000} );
-      this.router.navigateByUrl("");
-    }, ()=>{});
+    if(this.service.isAuthenticated()){
+        this.flashMessage.show( "You're already logged in.", {cssClass: 'alert-warning', timeout: 4000} );
+        this.router.navigateByUrl("");
+      }
   }
 
   onSubmit(user:User){

@@ -1,11 +1,11 @@
 <div class="container" id="welcome">
-    <h1 class="mb-4">Welcome {{username}}</h1>
+    <h1 class="mb-4">Welcome {{user?.username}}</h1>
     <p>Quick links:</p>
-    <div id="suggestions" *ngIf="role=='user'">
+    <div id="suggestions" *ngIf="user?.role=='user'">
         <a routerLink="user/ipos">IPOs</a>
         <a routerLink="user/company">Compare Company</a>
     </div>
-    <div id="suggestions" *ngIf="role=='admin'">
+    <div id="suggestions" *ngIf="user?.role=='admin'">
         <a routerLink="admin/excel">Import Excel Data</a>
         <a routerLink="admin/company">Manage Companies</a>
         <a routerLink="admin/ipos">Update IPO Details</a>

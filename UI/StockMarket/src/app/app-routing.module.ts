@@ -11,25 +11,28 @@ import { ImportExcelComponent } from './Views/Admin/import-excel/import-excel.co
 import { ManageAccountComponent } from './Views/Admin/manage-account/manage-account.component';
 import { ManageCompanyComponent } from './Views/Admin/manage-company/manage-company.component';
 import { UpdateIPOComponent } from './Views/Admin/update-ipo/update-ipo.component';
+import { AuthGuard } from './Guards/auth.guard';
+import { NavbarComponent } from './Views/navbar/navbar.component';
 
 
 const routes: Routes = [
   {path:'login', component:LoginComponent},
   {path:'register', component:SignupComponent},
-  {path:'', component:HomeComponent},
-  {path:'profile', component:EditProfileComponent},
+  
+  {path:'', component:HomeComponent, canActivate:[AuthGuard]},
+  {path:'profile', component:EditProfileComponent, canActivate:[AuthGuard]},
   
   //user
-  {path:'user/company', component:CompareCompanyComponent},
-  {path:'user/ipos', component:IPOComponent},
+  {path:'user/company', component:CompareCompanyComponent, canActivate:[AuthGuard]},
+  {path:'user/ipos', component:IPOComponent, canActivate:[AuthGuard]},
 
   //admin
-  {path:'admin/excel', component:ImportExcelComponent},
-  {path:'admin/accounts', component:ManageAccountComponent},
-  {path:'admin/company', component:ManageCompanyComponent},
-  {path:'admin/ipos', component:UpdateIPOComponent},
+  {path:'admin/excel', component:ImportExcelComponent, canActivate:[AuthGuard]},
+  {path:'admin/accounts', component:ManageAccountComponent, canActivate:[AuthGuard]},
+  {path:'admin/company', component:ManageCompanyComponent, canActivate:[AuthGuard]},
+  {path:'admin/ipos', component:UpdateIPOComponent, canActivate:[AuthGuard]},
 
-  {path:'**', component:NotFoundComponent}
+  {path:'**', component:NotFoundComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({

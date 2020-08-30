@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { User } from '../Models/user';
 import { environment } from 'src/environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class AccountService {
   path:string = environment.gatewayURL;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, public jwtHelper: JwtHelperService) { }
 
   public authenticate(user:User): Observable<any> {
     return this.http.post(`${this.path}/Account/Validate`, user);
@@ -24,7 +25,12 @@ export class AccountService {
     return this.http.get<boolean>(`${this.path}/Account/isTaken/${username}`);
   }
 
-  public isLoggedIn():Observable<boolean>{
-    return this.http.get<any>(`${this.path}/Account/Validate`);
+  public isAuthenticated():boolean{
+    let token:string = JSON.parse(localStorage.getItem("session"))?.token;
+    return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  public logout():void{
+    localStorage.clear();
   }
 }
