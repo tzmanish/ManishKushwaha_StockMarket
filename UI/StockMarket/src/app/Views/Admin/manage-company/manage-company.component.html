@@ -155,8 +155,7 @@
 </div>
 
 <div class="row">
-    <div class="mx-auto">
-        <table class="table-responsive-lg table-hover table-bordered mx-auto">
+        <table class="table-responsive table-striped table-hover mx-auto">
             <thead>
                 <tr>
                     <th scope="col">Company Code</th>
@@ -171,8 +170,8 @@
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
-            <tbody *ngFor="let company of companies">
-                <tr>
+            <tbody>
+                <tr *ngFor="let company of companies">
                     <td>{{company.companyCode}}</td>
                     <td>{{company.companyName}}</td>
                     <td>{{company.turnover | currency:'INR':'symbol-narrow' }}</td>
@@ -194,12 +193,13 @@
                         </span>
                     </td>
                     <td>
-                        <button class="btn btn-outline-warning btn-sm m-1" (click)="editCompany(company)"><i class="fas fa-pen"></i></button>
-                        <button class="btn btn-outline-danger btn-sm m-1" (click)="deleteCompany(company.companyCode)"><i class="fas fa-trash"></i></button>
+                        <span class="text-nowrap">
+                            <button class="btn btn-outline-warning btn-sm m-1" (click)="editCompany(company)"><i class="fas fa-pen"></i></button>
+                            <button class="btn btn-outline-danger btn-sm m-1" (click)="deleteCompany(company.companyCode)"><i class="fas fa-trash"></i></button>
+                        </span>
                     </td>
                 </tr>
             </tbody>
         </table>
-    </div>
 </div>
 
