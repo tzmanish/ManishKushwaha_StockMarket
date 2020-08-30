@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
   }
 
   getUserData():boolean {
-    this.user = JSON.parse(localStorage.getItem("session"))?.user;
+    this.user = this.service.getUserData();
     return true;
   }
 

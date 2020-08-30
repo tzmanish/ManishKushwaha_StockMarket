@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/Models/user';
+import { AccountService } from 'src/app/Services/account.service';
 
 @Component({
   selector: 'app-home',
@@ -9,10 +10,10 @@ import { User } from 'src/app/Models/user';
 export class HomeComponent implements OnInit {
   user:User;
 
-  constructor() { }
+  constructor(private service: AccountService) { }
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem("session"))?.user;
+    this.user = this.service.getUserData();
   }
 
 }

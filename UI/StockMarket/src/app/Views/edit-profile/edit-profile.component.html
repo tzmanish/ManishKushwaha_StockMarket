@@ -1,1 +1,148 @@
 <app-back-button [backLink]="''"></app-back-button>
+
+<div class="row mb-4">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-center pb-4 pt-3">Edit Profile</h2>
+                <hr>
+                <form #profileForm="ngForm" (ngSubmit)="updateProfile()">
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input 
+                            type="text" 
+                            [(ngModel)]="user.id"
+                            #id = "ngModel"
+                            class="form-control"
+                            name="id"
+                            disabled
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input 
+                            type="text" 
+                            [(ngModel)]="user.username"
+                            #username = "ngModel"
+                            class="form-control"
+                            name="username"
+                            disabled
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input 
+                            type="text" 
+                            [(ngModel)]="user.email"
+                            #email = "ngModel"
+                            class="form-control"
+                            name="email"
+                            disabled
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Role</label>
+                        <input 
+                            type="text" 
+                            [(ngModel)]="user.role"
+                            #role = "ngModel"
+                            class="form-control"
+                            name="role"
+                            disabled
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input 
+                            type="tel" 
+                            [(ngModel)]="user.mobile"
+                            [ngClass]="{
+                                'is-invalid': 
+                                    mobile.errors && 
+                                    mobile.touched && 
+                                    user.mobile, 
+                                'is-valid': 
+                                    !mobile.errors && 
+                                    mobile.touched && 
+                                    user.mobile
+                            }"
+                            #mobile = "ngModel"
+                            class="form-control"
+                            name="mobile"
+                            placeholder="Phone"
+                            pattern="^\d{10}$"
+                        >
+                        <div class="invalid-feedback">
+                          Please enter 10 digit phone number (Format: 123467890)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label>New Password</label>
+                      <input 
+                        type="password"
+                        #newpass="ngModel"
+                        [(ngModel)]="newPass"
+                        [ngClass]="{
+                          'is-invalid': 
+                            newpass.errors && 
+                            newpass.touched,
+                          'is-valid': 
+                            !newpass.errors && 
+                            newpass.touched &&
+                            newPass
+                        }"
+                        class="form-control" 
+                        placeholder="New Password"
+                        name="newPass"
+                        minlength="6"
+                      >
+                      <div 
+                        [hidden]="!newpass.errors?.minlength" 
+                        class="invalid-feedback"
+                      > Password should be atleast 6 characters long </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Current Password*</label>
+                        <input 
+                        type="password"
+                        #curpass="ngModel"
+                        [(ngModel)]="curPass"
+                        [ngClass]="{
+                            'is-invalid': 
+                                curpass.errors && 
+                                curpass.touched
+                        }"
+                        class="form-control" 
+                        placeholder="Current password"
+                        name="curPass"
+                        required
+                        >
+                        <div 
+                        [hidden]="!curpass.errors?.required" 
+                        class="invalid-feedback"
+                        > Current Password is required to update profile </div>
+                    </div>
+
+                    <button 
+                      [disabled]="!profileForm.form.valid || loading" 
+                      class="btn btn-primary btn-block"
+                    >
+                        Update
+                        <span 
+                            class="spinner-border spinner-border-sm" 
+                            role="status" 
+                            aria-hidden="true"
+                            *ngIf="loading"
+                        > </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

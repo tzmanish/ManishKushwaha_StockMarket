@@ -1,7 +1,7 @@
 <nav 
   class="navbar navbar-expand-lg navbar-light bg-light mb-4"
   *ngIf="this.service.isAuthenticated() && this.getUserData()"
->
+> 
   <a class="navbar-brand" routerLink="">{{user?.role}}-portal</a>
   <button 
     class="navbar-toggler" 

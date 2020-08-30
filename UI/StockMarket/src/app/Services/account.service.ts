@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../Models/user';
 import { environment } from 'src/environments/environment';
@@ -26,11 +26,22 @@ export class AccountService {
   }
 
   public isAuthenticated():boolean{
-    let token:string = JSON.parse(localStorage.getItem("session"))?.token;
-    return !this.jwtHelper.isTokenExpired(token);
+    return !this.jwtHelper.isTokenExpired(this.getAuthToken());
   }
 
   public logout():void{
     localStorage.clear();
+  }
+
+  public getAuthToken():string{
+    return JSON.parse(localStorage.getItem("session"))?.token;
+  }
+
+  public getUserData():User{
+    return JSON.parse(localStorage.getItem("session"))?.user;
+  }
+
+  public updateUserData(user:any):Observable<User>{
+    return this.http.put<User>(`${this.path}/Account/Update`, user);
   }
 }
