@@ -30,18 +30,13 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(user:User){
-    console.log(user);
     this.loading = true;
-    this.service
-      .authenticate(user)
+
+    this.service.authenticate(user)
       .subscribe(Response=>{
         localStorage.setItem("session", JSON.stringify(Response));
         this.router.navigateByUrl("");
-      },err=>{
-        console.log(err);
-        this.resetForm();
-      });
-    this.loading = false;
+      },()=>{this.loading = false;});
   }
 
   public resetForm(){

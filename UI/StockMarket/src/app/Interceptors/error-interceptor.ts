@@ -22,6 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                         errorMessage = `Error ${error.status} - ${error.error}`;
                     }
                     this.flashMessage.show( errorMessage, {cssClass: 'alert-danger', timeout: 4000} );
+                    // console.log(error);
                     return throwError(errorMessage);
                 }));
     }

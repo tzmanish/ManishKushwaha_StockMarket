@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
 export class SignupComponent implements OnInit {
   user:User = <User>{ };
   istaken:boolean = false;
-  locked:boolean = true;
   @ViewChild('signupForm') form:NgForm;
   loading:boolean = false;
 
@@ -26,36 +25,28 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  showAlert(alertClass:string, message: string|any):void{
-    let errMsg = typeof message === "string"? message :
-      (message.error?.text) ? message.error.text : 
-            message.error.error?.message ? `${message.status} - ${message.error.error.message}` : 
-              message.status? `${message.status} - ${message.statusText}` : 
-              'Server error';
-    this.flashMessage.show(errMsg, {cssClass: `alert-${alertClass}`, timeout: 4000});
-  }
-
   onSubmit(){
+    this.loading=true;
+
     if(this.isTaken(), this.istaken){
-      this.showAlert("danger", "Username already taken");
+      this.flashMessage.show("Username already taken", {cssClass: "alert-danger", timeout: 4000});
+      this.loading = false;
     }
-    this.service
-      .register(this.form.value)
+    else this.service.register(this.form.value)
       .subscribe(() => {
         this.flashMessage.show(
           "Registration successful. A confirmation email have been sent to "+this.user.email,
           {cssClass: 'alert-success', timeout: 4000}
-        );
-        this.router.navigateByUrl("login");
-      }, err => this.showAlert("danger", err));
+          );
+          this.router.navigateByUrl("login");
+      }, ()=>{this.loading = false});
   }
 
   public isTaken():void{
     if(this.user.username.length<3) this.istaken = false;
     else this.service.isTaken(this.user.username)
-      .subscribe(taken=>this.istaken =  (taken === true), err=>{
+      .subscribe(taken=>this.istaken =  (taken === true), ()=>{
         this.istaken = false;   //Can't check.
-        this.showAlert("danger", err);
-      });
+    });
   }
 }

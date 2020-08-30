@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../Models/user';
 import { environment } from 'src/environments/environment';
@@ -14,11 +14,11 @@ export class AccountService {
   constructor(private http:HttpClient, public jwtHelper: JwtHelperService) { }
 
   public authenticate(user:User): Observable<any> {
-    return this.http.post(`${this.path}/Account/Validate`, user);
+    return this.http.post<any>(`${this.path}/Account/Validate`, user);
   }
 
-  public register(user:User): Observable<any> {
-    return this.http.post(`${this.path}/Account/Add`, user);
+  public register(user:User): Observable<string> {
+    return this.http.post(`${this.path}/Account/Add`, user, {responseType: 'text'});
   }
 
   public isTaken(username:string):Observable<boolean>{
