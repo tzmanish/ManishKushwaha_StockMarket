@@ -21,6 +21,7 @@ import { ManageAccountComponent } from './Views/Admin/manage-account/manage-acco
 import { BackButtonComponent } from './Views/back-button/back-button.component';
 import { AuthInterceptor } from './Interceptors/auth-interceptor';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { ErrorInterceptor } from './Interceptors/error-interceptor';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,11 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true
     }
   ],
