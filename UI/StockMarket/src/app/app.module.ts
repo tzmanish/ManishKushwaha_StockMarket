@@ -18,6 +18,7 @@ import { ImportExcelComponent } from './Views/Admin/import-excel/import-excel.co
 import { ManageCompanyComponent } from './Views/Admin/manage-company/manage-company.component';
 import { UpdateIPOComponent } from './Views/Admin/update-ipo/update-ipo.component';
 import { ManageAccountComponent } from './Views/Admin/manage-account/manage-account.component';
+import { BackButtonComponent } from './Views/back-button/back-button.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ManageAccountComponent } from './Views/Admin/manage-account/manage-acco
     ImportExcelComponent,
     ManageCompanyComponent,
     UpdateIPOComponent,
-    ManageAccountComponent
+    ManageAccountComponent,
+    BackButtonComponent
   ],
   imports: [
     BrowserModule,
