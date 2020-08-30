@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlashMessagesModule } from 'angular2-flash-messages';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './Views/login/login.component';
@@ -19,6 +19,7 @@ import { ManageCompanyComponent } from './Views/Admin/manage-company/manage-comp
 import { UpdateIPOComponent } from './Views/Admin/update-ipo/update-ipo.component';
 import { ManageAccountComponent } from './Views/Admin/manage-account/manage-account.component';
 import { BackButtonComponent } from './Views/back-button/back-button.component';
+import { AuthInterceptor } from './Interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,14 @@ import { BackButtonComponent } from './Views/back-button/back-button.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AccountService],
+  providers: [
+    AccountService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

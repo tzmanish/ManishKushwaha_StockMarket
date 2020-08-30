@@ -25,9 +25,6 @@ export class AccountService {
   }
 
   public isLoggedIn():Observable<boolean>{
-    return this.http.get<any>(`${this.path}/Account/Validate`, {headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer '+JSON.parse(localStorage.getItem("session"))?.token
-    })});
+    return this.http.get<any>(`${this.path}/Account/Validate`);
   }
 }
