@@ -1,12 +1,21 @@
 <app-back-button [backLink]="''"></app-back-button>
 
-<div class="row mb-4" *ngIf="this.newCompany.formVisible">
+<div class="row mb-4" *ngIf="!this.newCompany.formVisible">
+    <div class="col-md-6 mx-auto">
+        <button 
+            class="btn btn-primary btn-block" 
+            (click)="this.adding = true && this.newCompany.formVisible = true"
+        ><i class="fas fa-plus-circle"></i> add new company</button>
+    </div>
+</div>
+<div class="row mb-4" *ngIf="this.newCompany.formVisible" id="companyForm">
     <div class="col-md-6 mx-auto">
         <div class="card">
             <div class="card-body">
-                <h2 class="text-center pb-4 pt-3"> Add Company </h2>
+                <h2 class="text-center pb-4 pt-3" *ngIf="adding"> Add Company </h2>
+                <h2 class="text-center pb-4 pt-3" *ngIf="!adding"> Update Company </h2>
                 <hr>
-                <form #companyForm = "ngForm" (ngSubmit)="addCompany(this.newCompany)">
+                <form #companyForm = "ngForm">
                     <div class="form-group">
                         <label>Company Code*</label>
                         <input 
@@ -27,6 +36,7 @@
                         name="companyCode"
                         required
                         autofocus
+                        [disabled] = "!adding"
                         >
                         <div 
                             [hidden]="!companyCode.errors?.required" 
@@ -134,10 +144,29 @@
                         </textarea>
                     </div>
 
+                    <div class="custom-control custom-switch mb-4">
+                        <input 
+                            type="checkbox" 
+                            [(ngModel)]="newCompany.isActive"
+                            #isActive = "ngModel"
+                            class="custom-control-input" 
+                            name="isActive"
+                            id = "isActive"
+                        > <label class="custom-control-label" for="isActive">Active on create</label>
+                    </div>
+
                     <button 
+                        *ngIf="adding"
                         class="btn btn-primary" 
                         [disabled]="!companyForm.form.valid"
+                        (click)="addCompany(this.newCompany)"
                     > Add </button>
+                    <button 
+                        *ngIf="!adding"
+                        class="btn btn-warning" 
+                        [disabled]="!companyForm.form.valid"
+                        (click)="updateCompany(this.newCompany)"
+                    > Update </button>
                     <button class="btn" (click)="resetAddForm()"> Cancel </button>
                 </form>
             </div>
@@ -145,17 +174,8 @@
     </div>
 </div>
 
-<div class="row mb-4" *ngIf="!this.newCompany.formVisible">
-    <div class="col-md-6 mx-auto">
-        <button 
-            class="btn btn-primary btn-block" 
-            (click)="this.newCompany.formVisible = true"
-        ><i class="fas fa-plus-circle"></i> add new company</button>
-    </div>
-</div>
-
 <div class="row">
-        <table class="table-responsive table-striped table-hover mx-auto">
+        <table class="table-responsive table-hover mx-auto">
             <thead>
                 <tr>
                     <th scope="col">Company Code</th>
@@ -170,8 +190,8 @@
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr *ngFor="let company of companies">
+            <tbody *ngFor="let company of companies">
+                <tr>
                     <td>{{company.companyCode}}</td>
                     <td>{{company.companyName}}</td>
                     <td>{{company.turnover | currency:'INR':'symbol-narrow' }}</td>
@@ -189,13 +209,22 @@
                                 [(ngModel)]="company.isActive"
                                 (change) = "updateCompany(company)"
                             >
-                            <label class="custom-control-label" for="isActive-{{company.companyCode}}"></label>
+                            <label 
+                                class="custom-control-label" 
+                                for="isActive-{{company.companyCode}}"
+                            ></label>
                         </span>
                     </td>
                     <td>
                         <span class="text-nowrap">
-                            <button class="btn btn-outline-warning btn-sm m-1" (click)="editCompany(company)"><i class="fas fa-pen"></i></button>
-                            <button class="btn btn-outline-danger btn-sm m-1" (click)="deleteCompany(company.companyCode)"><i class="fas fa-trash"></i></button>
+                            <button 
+                                class="btn btn-outline-warning btn-sm m-1" 
+                                (click)="editCompany(company)"
+                            > <i class="fas fa-pen fa-fw"></i> </button>
+                            <button 
+                                class="btn btn-outline-danger btn-sm m-1" 
+                                (click)="deleteCompany(company.companyCode)"
+                            > <i class="fas fa-trash fa-fw"></i> </button>
                         </span>
                     </td>
                 </tr>

@@ -10,6 +10,7 @@ import { AdminService } from 'src/app/Services/admin.service';
 export class ManageCompanyComponent implements OnInit {
   companies:Company[];
   newCompany:Company = <Company>{};
+  adding:boolean = true;
   iscodetaken:boolean = false;
 
   constructor(private service:AdminService) { }
@@ -25,9 +26,7 @@ export class ManageCompanyComponent implements OnInit {
   }
 
   public updateCompany(company:Company):void{
-    this.service.updateCompany(company).subscribe(res=>{
-      console.log(res);
-    }, err=>console.log(err));
+    this.service.updateCompany(company).subscribe(()=>this.resetAddForm(), err=>console.log(err));
   }
 
   public deleteCompany(companyCode:string):void{
@@ -37,10 +36,6 @@ export class ManageCompanyComponent implements OnInit {
     }, err=>console.log(err));
   }
 
-  public editCompany(company:Company):void{
-    this.service.updateCompany(company).subscribe(()=>{}, err=>console.log(err));
-  }
-
   public addCompany(company:Company):void{
     this.service.addCompany(company).subscribe(()=>{}, err=>console.log(err));
     this.resetAddForm();
@@ -48,6 +43,7 @@ export class ManageCompanyComponent implements OnInit {
 
   public resetAddForm():void{
     this.newCompany = <Company>{};
+    this.adding = true;
   }
 
   public isCodeTaken():void{
@@ -56,5 +52,12 @@ export class ManageCompanyComponent implements OnInit {
         this.iscodetaken = false;   //Can't check.
         console.log(err);
       });
+  }
+  public editCompany(company:Company):void{
+    this.resetAddForm();
+    this.adding = false;
+    this.newCompany = Object.assign({}, company);
+    this.newCompany.formVisible = true;
+    document.getElementById("companyForm")?.scrollIntoView({behavior:"smooth"});
   }
 }
