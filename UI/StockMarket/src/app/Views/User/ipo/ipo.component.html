@@ -1,1 +1,32 @@
 <app-back-button [backLink]="''"></app-back-button>
+
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Company Code</th>
+                    <th scope="col">Stock Exchange</th>
+                    <th scope="col">Price Per Share</th>
+                    <th scope="col">Number of Shares</th>
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Remarks</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let ipo of ipos">
+                    <td>{{ipo.companyCode}}</td>
+                    <td>{{ipo.stockExchange}}</td>
+                    <td>{{ipo.pricePerShare | currency:'INR':'symbol-narrow' }}</td>
+                    <td>{{ipo.totalShares}}</td>
+                    <td>{{ipo.dateTime | date:'short'}}</td>
+                    <td>{{ipo.remrks}}</td>
+                </tr>
+            </tbody>
+            
+            <h6 class="text-center mt-4" *ngIf="!ipos.length">No new IPOs yet, check back later.</h6>
+            <button class="btn btn-block btn-primary" *ngIf="more" (click)="getItems()">Load more...</button>
+        </table>
+    </div>
+</div>
