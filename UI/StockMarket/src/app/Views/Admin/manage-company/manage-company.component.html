@@ -111,7 +111,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Stock Echanges</label>
+                        <label>Stock Echanges - seperated by a comma followed by a space (", ")</label>
                         <input 
                         type="text" 
                         [(ngModel)]="newCompany.stockExchanges"
@@ -190,6 +190,9 @@
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
+            
+            <h6 class="text-center mt-4" *ngIf="!companies">No Content</h6>
+
             <tbody *ngFor="let company of companies">
                 <tr>
                     <td>{{company.companyCode}}</td>

@@ -54,8 +54,12 @@ namespace AdminAPI.Services {
             return repo.DeactivateCompany(companyCode);
         }
 
-        public object isTaken(string companyCode) {
+        public bool isTaken(string companyCode) {
             return repo.isCompanyCodeExist(companyCode);
+        }
+
+        public List<IPODetails> GetIPOs() {
+            return repo.GetIPOs();
         }
     }
 }

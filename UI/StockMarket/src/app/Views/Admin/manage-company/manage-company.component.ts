@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Company } from 'src/app/Models/company';
 import { AdminService } from 'src/app/Services/admin.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-manage-company',
@@ -13,16 +14,16 @@ export class ManageCompanyComponent implements OnInit {
   adding:boolean = true;
   iscodetaken:boolean = false;
 
-  constructor(private service:AdminService) { }
+  constructor(private service:AdminService, private flashMessage: FlashMessagesService) { }
 
   ngOnInit(): void {
-    this.service.timeToReload.subscribe(()=>this.getAllCompanies());
+    this.service.reloadCompanies.subscribe(()=>this.getAllCompanies());
     this.getAllCompanies();
   }
 
   public getAllCompanies(){
     this.service.getCompanies()
-      .subscribe(companies=>this.companies=companies, err=>console.log(err));
+      .subscribe(companies=>this.companies=companies);
   }
 
   public updateCompany(company:Company):void{
@@ -32,12 +33,12 @@ export class ManageCompanyComponent implements OnInit {
   public deleteCompany(companyCode:string):void{
     if(confirm(`This action wil delete ${companyCode} permanently! Are you sure?"`))
     this.service.deleteCompany(companyCode).subscribe(res=>{
-      console.log(res);
-    }, err=>console.log(err));
+      this.flashMessage.show(`${res.companyCode}-${res.companyName} deleted`, {cssClass: 'alert-success', timeout: 4000});
+    });
   }
 
   public addCompany(company:Company):void{
-    this.service.addCompany(company).subscribe(()=>{}, err=>console.log(err));
+    this.service.addCompany(company).subscribe(()=>{});
     this.resetAddForm();
   }
 

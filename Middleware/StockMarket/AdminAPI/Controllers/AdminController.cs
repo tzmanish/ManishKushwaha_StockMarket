@@ -76,6 +76,16 @@ namespace AdminAPI.Controllers {
             }
         }
 
+        [HttpGet]
+        [Route("IPO/All")]
+        public IActionResult GetIPOs() {
+            try {
+                return Ok(service.GetIPOs());
+            } catch (Exception ex) {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost]
         [Route("IPO/Add")]
         public IActionResult AddIPO(IPODetails iPODetails) {

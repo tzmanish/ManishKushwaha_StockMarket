@@ -1,1 +1,61 @@
 <app-back-button [backLink]="''"></app-back-button>
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-center pb-4 pt-3">Import Excel</h2>
+                <hr>
+                <form #excelForm="ngForm" (ngSubmit)="onSubmit(excelForm)">
+                    <div class="form-group">
+                        <label class="sr-only">Select</label>
+                        <input
+                            type="file" 
+                            accept=".xlsx,.xls"
+                            class="form-control-file col-md-8" 
+                            [ngClass]="{
+                                'is-invalid': 
+                                    excelForm.controls.fileInput?.errors && 
+                                    excelForm.controls.fileInput?.touched
+                              }"
+                            name="fileInput"
+                            ngModel 
+                            required
+                        >
+                        <div 
+                            [hidden]="!excelForm.controls.fileInput?.errors?.required" 
+                            class="invalid-feedback"
+                        > Please choose a file </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Worksheet*</label>
+                        <input
+                            type="text" 
+                            class="form-control"
+                            name="worksheetName"
+                            placeholder="Worksheet Name"
+                            ngModel="Sheet1"
+                            [ngClass]="{
+                                'is-invalid': 
+                                    excelForm.controls.worksheetName?.errors && 
+                                    excelForm.controls.worksheetName?.touched
+                              }"
+                            required
+                        >
+                        <div 
+                            [hidden]="!excelForm.controls.worksheetName?.errors?.required" 
+                            class="invalid-feedback"
+                        > Worksheet Name is required </div>
+                    </div>
+
+                    <button 
+                        class="btn btn-primary" 
+                        [disabled]="!excelForm.form.valid || loading"
+                    > Import </button>
+                    <a (click)="downloadSample()" class="btn btn-link">Download Template</a> 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

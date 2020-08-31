@@ -6,4 +6,5 @@ export interface IPODetails {
     totalShares:number;
     dateTime?:Date;
     remrks?:string;
+    formVisible?:boolean;
 }

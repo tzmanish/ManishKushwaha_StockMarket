@@ -1,1 +1,190 @@
 <app-back-button [backLink]="''"></app-back-button>
+
+<div class="row mb-4" *ngIf="!this.newIpo.formVisible">
+    <div class="col-md-6 mx-auto">
+        <button 
+            class="btn btn-primary btn-block" 
+            (click)="this.adding = true && this.newIpo.formVisible = true"
+        > <i class="fas fa-plus-circle"></i> add new IPO-detail </button>
+    </div>
+</div>
+<div class="row mb-4" *ngIf="this.newIpo.formVisible" id="ipoForm">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-center pb-4 pt-3" *ngIf="adding"> Add IPO </h2>
+                <h2 class="text-center pb-4 pt-3" *ngIf="!adding"> Update IPO </h2>
+                <hr>
+                <form #ipoForm = "ngForm">
+                    <div class="form-group">
+                        <label>Company*</label>
+                        <select 
+                            class="form-control"
+                            name="companyCode"
+                            #companyCode = "ngModel"
+                            [(ngModel)]="newIpo.companyCode"
+                            [ngClass]="{
+                                'is-invalid': 
+                                    companyCode.errors && 
+                                    companyCode.touched
+                            }"
+                            (change) = "updateExchanges(companyCode.value)"
+                        >
+                            <option 
+                                *ngFor="let company of companies"
+                                [ngValue]="company.companyCode"
+                                [ngClass]="{'bg-light': !company.isActive}"
+                            > 
+                                {{company.companyName}} ({{company.companyCode}}) 
+                                <span *ngIf="!company.isActive"> : Inactive</span>
+                            </option>
+                        </select>
+                        <div 
+                            [hidden]="!companyCode.errors?.required" 
+                            class="invalid-feedback"
+                            > Select an exchange 
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Stock Exchange*</label>
+                        <select 
+                            class="form-control"
+                            name="exchange"
+                            #exchange = "ngModel"
+                            [(ngModel)]="newIpo.stockExchange"
+                            [ngClass]="{
+                                'is-invalid': 
+                                    exchange.errors && 
+                                    exchange.touched
+                            }"
+                            (change) = "log(newIpo.stockExchange)"
+                            required
+                        >
+                            <option 
+                                *ngFor="let exchange of exchanges"
+                                [ngValue]="exchange"
+                            > {{exchange}} </option>
+                        </select>
+                        <div 
+                            [hidden]="!exchange.errors?.required" 
+                            class="invalid-feedback"
+                            > Select an exchange 
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Price per share*</label>
+                        <input 
+                            type="number" 
+                            [(ngModel)]="newIpo.pricePerShare"
+                            #pricePerShare = "ngModel"
+                            [ngClass]="{
+                                'is-invalid': 
+                                    pricePerShare.errors && 
+                                    pricePerShare.touched
+                            }"
+                            class="form-control"
+                            name="pricePerShare"
+                            required
+                        >
+                        <div 
+                            [hidden]="!exchange.errors?.required" 
+                            class="invalid-feedback"
+                            > Price per share is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Number of shares*</label>
+                        <input 
+                            type="number" 
+                            [(ngModel)]="newIpo.totalShares"
+                            #totalShares = "ngModel"
+                            class="form-control"
+                            name="totalShares"
+                        >
+                        <div 
+                            [hidden]="!totalShares.errors?.required" 
+                            class="invalid-feedback"
+                            > Price per share is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date and Time</label>
+                        <input 
+                            type="datetime-local" 
+                            [(ngModel)]="newIpo.dateTime"
+                            #datetime = "ngModel"
+                            class="form-control"
+                            name="datetime"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <textarea
+                        class="form-control"
+                        [(ngModel)]="newIpo.remrks"
+                        #remarks = "ngModel"
+                        name="remarks"
+                        rows="2"
+                        >
+                        </textarea>
+                    </div>
+
+                    <button 
+                        *ngIf="adding"
+                        class="btn btn-primary" 
+                        [disabled]="!ipoForm.form.valid"
+                        (click)="addIpo(this.newIpo)"
+                    > Add </button>
+                    <button 
+                        *ngIf="!adding"
+                        class="btn btn-warning" 
+                        [disabled]="!ipoForm.form.valid"
+                        (click)="updateIpo(this.newIpo)"
+                    > Update </button>
+                    <button class="btn" (click)="resetAddForm()"> Cancel </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+        <table class="table-responsive table-hover mx-auto">
+            <thead>
+                <tr>
+                    <th scope="col">Company Code</th>
+                    <th scope="col">Stock Exchange</th>
+                    <th scope="col">Price Per Share</th>
+                    <th scope="col">Number of Shares</th>
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Remarks</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            
+            <h6 class="text-center mt-4" *ngIf="!ipos">No Content</h6>
+
+            <tbody *ngFor="let ipo of ipos">
+                <tr>
+                    <td>{{ipo.companyCode}}</td>
+                    <td>{{ipo.stockExchange}}</td>
+                    <td>{{ipo.pricePerShare | currency:'INR':'symbol-narrow' }}</td>
+                    <td>{{ipo.totalShares}}</td>
+                    <td>{{ipo.dateTime | date:'short'}}</td>
+                    <td>{{ipo.remrks}}</td>
+                    <td>
+                        <button 
+                            class="btn btn-outline-warning btn-sm m-1" 
+                            (click)="editIpo(ipo)"
+                        > <i class="fas fa-pen fa-fw"></i> </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+

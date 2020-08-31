@@ -72,8 +72,12 @@ namespace AdminAPI.Repositories {
             return company;
         }
 
-        public object isCompanyCodeExist(string companyCode) {
+        public bool isCompanyCodeExist(string companyCode) {
             return context.Companies.Where(C => C.CompanyCode == companyCode).Any();
+        }
+
+        public List<IPODetails> GetIPOs() {
+            return context.IPODetails.OrderByDescending(ipo => ipo.DateTime).ToList();
         }
     }
 }
