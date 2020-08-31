@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { Company } from '../Models/company';
 import { IPODetails } from '../Models/ipodetails';
+import { StockPrice } from '../Models/stock-price';
 
 @Injectable({
   providedIn: 'root'
@@ -68,5 +69,12 @@ export class AdminService {
       `${this.path}/Admin/IPO/Update`, 
       JSON.stringify(ipo)
     ).pipe( tap(()=>{this._reloadIpos.next();}) );
+  }
+
+
+  public getMissingSP(companyCode:string, startDate:Date, endDate:Date):Observable<Date[]>{
+    return this.http.get<Date[]>(
+      `${this.path}/Admin/StockPrices/Missing/${companyCode}/${startDate}/${endDate}`
+    );
   }
 }

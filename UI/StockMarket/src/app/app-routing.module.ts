@@ -12,7 +12,7 @@ import { ManageAccountComponent } from './Views/Admin/manage-account/manage-acco
 import { ManageCompanyComponent } from './Views/Admin/manage-company/manage-company.component';
 import { UpdateIPOComponent } from './Views/Admin/update-ipo/update-ipo.component';
 import { AuthGuard } from './Guards/auth.guard';
-import { NavbarComponent } from './Views/navbar/navbar.component';
+import { MissingStockPricesComponent } from './Views/Admin/missing-stock-prices/missing-stock-prices.component';
 
 
 const routes: Routes = [
@@ -31,6 +31,7 @@ const routes: Routes = [
   {path:'admin/accounts', component:ManageAccountComponent, canActivate:[AuthGuard]},
   {path:'admin/company', component:ManageCompanyComponent, canActivate:[AuthGuard]},
   {path:'admin/ipos', component:UpdateIPOComponent, canActivate:[AuthGuard]},
+  {path:'admin/missingSP', component:MissingStockPricesComponent, canActivate:[AuthGuard]},
 
   {path:'**', component:NotFoundComponent, canActivate:[AuthGuard]}
 ];

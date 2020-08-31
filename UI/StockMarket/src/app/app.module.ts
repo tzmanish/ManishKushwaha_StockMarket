@@ -22,6 +22,7 @@ import { BackButtonComponent } from './Views/back-button/back-button.component';
 import { AuthInterceptor } from './Interceptors/auth-interceptor';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ErrorInterceptor } from './Interceptors/error-interceptor';
+import { MissingStockPricesComponent } from './Views/Admin/missing-stock-prices/missing-stock-prices.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ErrorInterceptor } from './Interceptors/error-interceptor';
     ManageCompanyComponent,
     UpdateIPOComponent,
     ManageAccountComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    MissingStockPricesComponent
   ],
   imports: [
     BrowserModule,

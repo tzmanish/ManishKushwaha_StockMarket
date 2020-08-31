@@ -1,0 +1,93 @@
+<app-back-button [backLink]="''"></app-back-button>
+
+<div class="row mb-4">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-center pb-4 pt-3"> Find missing Stock-Price dates</h2>
+                <hr>
+                <form #spForm = "ngForm">
+
+                    <div class="form-group">
+                        <label>Company*</label>
+                        <select 
+                            class="form-control"
+                            name="companyCode"
+                            [(ngModel)]="this.companyCode"
+                            [ngClass]="{
+                                'is-invalid': 
+                                    spForm.controls.companyCode?.errors && 
+                                    spForm.controls.companyCode?.touched
+                            }"
+                        >
+                            <option 
+                                *ngFor="let company of companies"
+                                [ngValue]="company.companyCode"
+                                [ngClass]="{'bg-light': !company.isActive}"
+                            > 
+                                {{company.companyName}} ({{company.companyCode}}) 
+                                <span *ngIf="!company.isActive"> : Inactive</span>
+                            </option>
+                        </select>
+                        <div 
+                            [hidden]="!spForm.controls.companyCode?.errors?.required" 
+                            class="invalid-feedback"
+                            > Select a company
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>From*</label>
+                        <input 
+                            type="datetime-local" 
+                            [(ngModel)]="this.start"
+                            class="form-control"
+                            name="datetimeStart"
+                            required
+                        >
+                        <div 
+                            [hidden]="!spForm.controls.datetimeStart?.errors?.required" 
+                            class="invalid-feedback"
+                            > Select a 'From' date
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>To*</label>
+                        <input 
+                            type="datetime-local" 
+                            [(ngModel)]="this.end"
+                            class="form-control"
+                            name="datetimeEnd"
+                            required
+                        >
+                        <div 
+                            [hidden]="!spForm.controls.datetimeStart?.errors?.required" 
+                            class="invalid-feedback"
+                            > Select a 'To' date
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn btn-primary" 
+                        [disabled]="!spForm.form.valid"
+                        (click)="getMissingSP()"
+                    > Search </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let date of missingSP">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{date | date:'d'}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{date | date:'MMM, y'}}</h6>
+                <p class="card-text">{{date | date:'fullDate'}}</p>
+            </div>
+        </div>
+    </div>
+</div>
