@@ -74,12 +74,12 @@ namespace UserAPI.Controllers {
         }
 
         [HttpGet]
-        [Route("IPO/{pageNumber:int=1}/{itemsPerPage:int=10}")]
-        public IActionResult GetIPODetails(int pageNumber, int itemsPerPage) {
+        [Route("IPO/{pageNumber:int=1}/{itemsPerPage:int=10}/{all:bool=false}")]
+        public IActionResult GetIPODetails(int pageNumber, int itemsPerPage, bool all) {
             try {
                 if (itemsPerPage <= 0 || pageNumber <= 0) 
                     return BadRequest("'Items Per Page' and 'Page Number' shold be positive integers.");
-                List <IPODetails> details = service.GetIPODetails(itemsPerPage, pageNumber);
+                List <IPODetails> details = service.GetIPODetails(itemsPerPage, pageNumber, all);
                 if (details.Any()) return Ok(details);
                 return NotFound("That's all, Come back later for more.");
             } catch (Exception ex) {

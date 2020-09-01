@@ -13,8 +13,8 @@ export class UserService {
 
   constructor(private http:HttpClient) { }
   
-  public getIpos(pg:number, ipp:number):Observable<IPODetails[]>{
-    return this.http.get<IPODetails[]>(`${this.path}/User/IPO/${pg}/${ipp}`);
+  public getIpos(pg:number, ipp:number, all:boolean):Observable<IPODetails[]>{
+    return this.http.get<IPODetails[]>(`${this.path}/User/IPO/${pg}/${ipp}/${all}`);
   }
 
   public getCompanies():Observable<Company[]>{

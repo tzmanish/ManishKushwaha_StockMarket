@@ -1,5 +1,24 @@
 <app-back-button [backLink]="''"></app-back-button>
 
+<!-- <button (click)="toggle()">Toggle</button> -->
+
+<div class="row justify-content-center mb-4">
+    <div class="col-auto">
+        <div class="custom-control custom-radio custom-control-inline">
+            <input class="custom-control-input" type="radio" id="radio1" name="mode" [value]="false" [(ngModel)]="all" (change)="toggle()">
+            <label class="custom-control-label" for="radio1">
+                Upcoming IPOs
+            </label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input class="custom-control-input" type="radio" id="radio2" name="mode" [value]="true" [(ngModel)]="all" (change)="toggle()">
+            <label class="custom-control-label" for="radio2">
+                All IPOs
+            </label>
+        </div>
+    </div>
+</div>
+
 <div class="row justify-content-center">
     <div class="col-auto">
         <table class="table table-responsive table-hover">

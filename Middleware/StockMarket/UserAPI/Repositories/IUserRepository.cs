@@ -10,6 +10,6 @@ namespace UserAPI.Repositories {
         public List<IPODetails> GetIPODetails(string companyCode);
         public List<StockPrice> GetStockPrices(string companyCode, DateTime start, DateTime end);
         public bool IsActive(string companyCode);
-        List<IPODetails> GetIPODetails(int itemsPerPage, int pageNumber);
+        List<IPODetails> GetIPODetails(int itemsPerPage, int pageNumber, bool all);
     }
 }

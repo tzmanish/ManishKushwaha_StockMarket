@@ -60,11 +60,15 @@ namespace UserAPI.Repositories {
                 ).Any();
         }
 
-        public List<IPODetails> GetIPODetails(int itemsPerPage, int pageNumber) {
-            return context.IPODetails
-                .Where(ipo => ipo.DateTime >= System.DateTime.Now && ipo.Company.isActive)
+        public List<IPODetails> GetIPODetails(int itemsPerPage, int pageNumber, bool all) {
+            var details = context.IPODetails
+                .Where(ipo=>ipo.Company.isActive);
+
+            if (!all) details = details.Where(ipo => ipo.DateTime >= System.DateTime.Now);
+
+            return details
                 .OrderBy(ipo => ipo.DateTime)
-                .Skip((pageNumber - 1)*itemsPerPage)
+                .Skip((pageNumber - 1) * itemsPerPage)
                 .Take(itemsPerPage)
                 .ToList();
         }
