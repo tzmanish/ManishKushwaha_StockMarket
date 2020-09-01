@@ -13,6 +13,7 @@ import { ManageCompanyComponent } from './Views/Admin/manage-company/manage-comp
 import { UpdateIPOComponent } from './Views/Admin/update-ipo/update-ipo.component';
 import { AuthGuard } from './Guards/auth.guard';
 import { MissingStockPricesComponent } from './Views/Admin/missing-stock-prices/missing-stock-prices.component';
+import { SearchCompnyComponent } from './Views/User/search-compny/search-compny.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
   //user
   {path:'user/company', component:CompareCompanyComponent, canActivate:[AuthGuard]},
   {path:'user/ipos', component:IPOComponent, canActivate:[AuthGuard]},
+  {path:'user/searchCompany', component:SearchCompnyComponent, canActivate:[AuthGuard]},
 
   //admin
   {path:'admin/excel', component:ImportExcelComponent, canActivate:[AuthGuard]},

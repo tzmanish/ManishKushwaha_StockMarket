@@ -23,6 +23,7 @@ import { AuthInterceptor } from './Interceptors/auth-interceptor';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ErrorInterceptor } from './Interceptors/error-interceptor';
 import { MissingStockPricesComponent } from './Views/Admin/missing-stock-prices/missing-stock-prices.component';
+import { SearchCompnyComponent } from './Views/User/search-compny/search-compny.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MissingStockPricesComponent } from './Views/Admin/missing-stock-prices/
     UpdateIPOComponent,
     ManageAccountComponent,
     BackButtonComponent,
-    MissingStockPricesComponent
+    MissingStockPricesComponent,
+    SearchCompnyComponent
   ],
   imports: [
     BrowserModule,
