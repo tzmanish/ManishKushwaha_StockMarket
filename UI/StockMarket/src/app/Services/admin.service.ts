@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { Company } from '../Models/company';
 import { IPODetails } from '../Models/ipodetails';
+import { AccountService } from './account.service';
 import { StockPrice } from '../Models/stock-price';
 
 @Injectable({
@@ -16,7 +17,7 @@ export class AdminService {
   private _reloadCompanies = new Subject<void>();
   get reloadCompanies(){return this._reloadCompanies;}
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private handler: HttpBackend, private service: AccountService) { }
 
   public getCompanies():Observable<Company[]>{
     return this.http.get<Company[]>(`${this.path}/Admin/Companies/All`);
@@ -47,8 +48,18 @@ export class AdminService {
 
 
 
-  public importExcel(){}
+  public importExcel(fileToUpload:File, worksheetName:string):Observable<StockPrice[]>{
+    const formData: FormData = new FormData();
+    formData.append('ExcelFile', fileToUpload, fileToUpload.name);
+    formData.set('Worksheet', worksheetName);
 
+    const http:HttpClient = new HttpClient(this.handler);
+    const options = { headers: new HttpHeaders({
+      'Authorization': 'Bearer ' + this.service.getAuthToken()
+    })};
+
+    return http.post<StockPrice[]>(`${this.path}/Excel/Upload`, formData, options);
+  }
 
   
   private _reloadIpos = new Subject<void>();

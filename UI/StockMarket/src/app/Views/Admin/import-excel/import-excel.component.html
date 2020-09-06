@@ -19,6 +19,7 @@
                                     excelForm.controls.fileInput?.touched
                               }"
                             name="fileInput"
+                            (change)="handleFileInput($event.target.files)"
                             ngModel 
                             required
                         >
@@ -57,5 +58,33 @@
                 </form>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row justify-content-center" *ngIf="stockPrices.length">
+    <div class="col-auto">
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Company Code</th>
+                    <th scope="col">Stock Exchange</th>
+                    <th scope="col">Current Price</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let sp of stockPrices">
+                    <td>{{sp.id}}</td>
+                    <td>{{sp.companyCode}}</td>
+                    <td>{{sp.stockExchange}}</td>
+                    <td>{{sp.currentPrice | currency:'INR':'symbol-narrow' }}</td>
+                    <td>{{sp.date | date:'shortDate'}}</td>
+                    <td>{{sp.time}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
