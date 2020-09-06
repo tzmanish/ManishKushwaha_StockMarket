@@ -10,8 +10,8 @@ namespace UserAPI.Services {
             this.repo = repo;
         }
 
-        public Company GetCompany(string id) {
-            return repo.GetCompanyById(id);
+        public Company GetCompanyByCompanyCode(string compantCode) {
+            return repo.GetCompanyById(compantCode);
         }
 
         public List<Company> GetCompanies() {
@@ -26,8 +26,36 @@ namespace UserAPI.Services {
             return repo.GetIPODetails(CompanyCode);
         }
 
-        public List<StockPrice> GetStockPrices(string companyCode, DateTime startDate, DateTime endDate) {
-            return repo.GetStockPrices(companyCode, startDate, endDate);
+        public CompanyDetail GetCompanyDetails(
+            string companyCode, 
+            DateTime startDate, 
+            DateTime endDate
+        ) {
+            List<StockPrice> stockPrices = repo.GetStockPrices(
+                companyCode, 
+                startDate, 
+                endDate
+            );
+
+            CompanyDetail companyDetail = new CompanyDetail(GetCompanyByCompanyCode(companyCode));
+
+            int i = 0;
+            for (
+                DateTime date = startDate.Date; 
+                date.Date <= endDate.Date; 
+                date = date.AddDays(1)
+            ) {
+                if (
+                    i < stockPrices.Count &&
+                    stockPrices[i].Date.Date == date.Date
+                ) {
+                    companyDetail.stockPrices.Add(stockPrices[i]);
+                    while (++i < stockPrices.Count && stockPrices[i].Date.Date == date.Date);  //taking only one stock price per day
+                } else
+                    companyDetail.stockPrices.Add(null);
+            }
+
+            return companyDetail;
         }
 
         public bool IsActive(string companyCode) {

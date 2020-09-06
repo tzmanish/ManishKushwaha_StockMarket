@@ -34,7 +34,7 @@ namespace UserAPI.Repositories {
                     sp.CompanyCode == companyCode && 
                     sp.Date > startDate && 
                     sp.Date < endDate
-                ).ToList();
+                ).OrderBy(sp=>sp.Date).ToList();
         }
 
         public List<Company> SearchCompanies(string query) {

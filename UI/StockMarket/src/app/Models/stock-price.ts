@@ -1,5 +1,4 @@
 import { Time } from '@angular/common';
-import { Company } from './company';
 
 export interface StockPrice {
     id:number;

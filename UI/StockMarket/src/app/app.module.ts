@@ -24,6 +24,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ErrorInterceptor } from './Interceptors/error-interceptor';
 import { MissingStockPricesComponent } from './Views/Admin/missing-stock-prices/missing-stock-prices.component';
 import { SearchCompnyComponent } from './Views/User/search-compny/search-compny.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,9 @@ import { SearchCompnyComponent } from './Views/User/search-compny/search-compny.
     HttpClientModule,
     FlashMessagesModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserModule,
+    ChartsModule
   ],
   providers: [
     AccountService,

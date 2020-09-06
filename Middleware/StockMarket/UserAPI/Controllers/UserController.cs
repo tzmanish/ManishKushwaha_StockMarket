@@ -38,7 +38,7 @@ namespace UserAPI.Controllers {
         [Route("Companies/{id}")]
         public IActionResult GetCompany(string id) {
             try {
-                Company company = service.GetCompany(id);
+                Company company = service.GetCompanyByCompanyCode(id);
                 if (company != null) return Ok(company);
                 return NotFound(id + " not found.");
             } catch (Exception ex) {
@@ -91,11 +91,17 @@ namespace UserAPI.Controllers {
         [Route("StockPrices/{companyCode}/{startDate}/{endDate}")]
         public IActionResult GetStockPrices(string companyCode, DateTime startDate, DateTime endDate) {
             try {
-                if (!service.IsActive(companyCode)) return NotFound("No active company identified by " + companyCode);
-                List<StockPrice> stockPrices = service.GetStockPrices(companyCode, startDate, endDate);
-                if (stockPrices.Any()) return Ok(stockPrices);
-                return NotFound($"No stock-price details for {companyCode} between {startDate} and {endDate}.");
-            }catch(Exception ex) {
+                if (startDate.Date > endDate.Date) 
+                    return BadRequest("the 'From' date should be before the 'To' date");
+
+                //if (!service.IsActive(companyCode)) 
+                //    return NotFound("No active company identified by " + companyCode);
+
+                return Ok(
+                    service.GetCompanyDetails(companyCode, startDate, endDate)
+                );
+
+            } catch(Exception ex) {
                 return StatusCode(500, ex.Message);
             }
         }

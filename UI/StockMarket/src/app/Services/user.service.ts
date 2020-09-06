@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Company } from '../Models/company';
+import { CompanyDetails } from '../Models/company-details';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +21,14 @@ export class UserService {
 
   public getCompanies():Observable<Company[]>{
     return this.http.get<Company[]>(`${this.path}/User/Companies/All`);
+  }
+
+  public getStockPrices(company:string|Company, startDate:string, endDate:string):Promise<CompanyDetails>{
+    const companyCode = typeof(company)==="string" ? company : company.companyCode;
+
+    return this.http
+      .get<CompanyDetails>(`${this.path}/User/StockPrices/${companyCode}/${startDate}/${endDate}`)
+      .pipe(first())
+      .toPromise();
   }
 }

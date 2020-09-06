@@ -19,7 +19,7 @@ namespace UserAPI.Models {
         [StringLength(30)]
         public string CEO { get; set; }
 
-        public IEnumerable<StockPrice> StockPrices { get; set; }
+        //public IEnumerable<StockPrice> StockPrices { get; set; }
 
         public string Brief { get; set; }
 

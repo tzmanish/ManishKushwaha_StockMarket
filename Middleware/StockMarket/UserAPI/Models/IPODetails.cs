@@ -24,7 +24,7 @@ namespace UserAPI.Models {
 
         public DateTime DateTime { get; set; }
 
-        public Company Company { get; set; }    //navigation property
+        public Company Company { get; set; }
 
         public string Remrks { get; set; }
 

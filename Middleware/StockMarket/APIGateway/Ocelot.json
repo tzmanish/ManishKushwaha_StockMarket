@@ -7,7 +7,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 65443
+                    "Port": 53057
                 }
             ],
             "UpstreamPathTemplate": "/User/{url}"
@@ -19,7 +19,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 49379
+                    "Port": 53059
                 }
             ],
             "UpstreamPathTemplate": "/Admin/{url}"
@@ -31,7 +31,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 49428
+                    "Port": 53055
                 }
             ],
             "UpstreamPathTemplate": "/Account/{url}"
@@ -43,13 +43,13 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 49393
+                    "Port": 53058
                 }
             ],
             "UpstreamPathTemplate": "/Excel/{url}"
         }
     ],
     "GlobalConfiguration": {
-        "BaseUrl": "https://loaclhost:65283"
+        "BaseUrl": "https://loaclhost:53056"
     }
 }
