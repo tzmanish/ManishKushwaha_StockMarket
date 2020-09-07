@@ -53,31 +53,37 @@ namespace ExcelAPI.Services {
             return stockPrices;
         }
 
-        public void ExportData(string filePath, string worksheetName, List<StockPrice> stockPrices) {
-            FileInfo file = new FileInfo(filePath);
+        public FileStream ExportData(List<string> companyCodes, DateTime startDate, DateTime endDate) {
+            string filepath = Path.Combine("ExcelFiles\\Downloads", "Export.xlsx");
+            using (ExcelPackage package = new ExcelPackage()) {
 
-            using (ExcelPackage package = new ExcelPackage(file)) {
-
-                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(worksheetName);
-                int totalRows = stockPrices.Count;
-                worksheet.Cells[1, 1].Value = "Company Code";
-                worksheet.Cells[1, 2].Value = "Stock Exchange";
-                worksheet.Cells[1, 3].Value = "Current Price";
-                worksheet.Cells[1, 4].Value = "Date";
-                worksheet.Cells[1, 5].Value = "Time";
-                int i = 0;
-                for (int row = 2; row <= totalRows + 1; row++) {
-                    worksheet.Cells[row, 1].Value = stockPrices[i].CompanyCode;
-                    worksheet.Cells[row, 2].Value = stockPrices[i].StockExchange;
-                    worksheet.Cells[row, 3].Value = stockPrices[i].CurrentPrice;
-                    worksheet.Cells[row, 4].Value = stockPrices[i].Date;
-                    worksheet.Cells[row, 5].Value = stockPrices[i].Time;
-                    i++;
+                foreach(string companyCode in companyCodes) {
+                    List<StockPrice> stockPrices = repo.GetStockPrices(
+                        companyCode,
+                        startDate,
+                        endDate
+                    );
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(companyCode);
+                    int totalRows = stockPrices.Count;
+                    worksheet.Cells[1, 1].Value = "Company Code";
+                    worksheet.Cells[1, 2].Value = "Stock Exchange";
+                    worksheet.Cells[1, 3].Value = "Current Price";
+                    worksheet.Cells[1, 4].Value = "Date";
+                    worksheet.Cells[1, 5].Value = "Time";
+                    int i = 0;
+                    for (int row = 2; row <= totalRows + 1; row++) {
+                        worksheet.Cells[row, 1].Value = stockPrices[i].CompanyCode;
+                        worksheet.Cells[row, 2].Value = stockPrices[i].StockExchange;
+                        worksheet.Cells[row, 3].Value = stockPrices[i].CurrentPrice;
+                        worksheet.Cells[row, 4].Value = stockPrices[i].Date;
+                        worksheet.Cells[row, 5].Value = stockPrices[i].Time;
+                        i++;
+                    }
                 }
-
-                package.Save();
-
+                package.SaveAs(new FileInfo(filepath));
             }
+            var file = new FileStream(filepath, FileMode.Open, FileAccess.Read);
+            return file;
         }
     }
 }

@@ -77,6 +77,21 @@ export class CompareCompanyComponent implements OnInit {
         data: CD.stockPrices.map(SP=>{return SP?.currentPrice}),
         label: `${CD.company.companyName} - ${CD.company.companyCode}`
       }});
-    console.log(this.companyDetails)
+    // console.log(this.companyDetails)
+  }
+
+  public downloadExcel(){
+    const companyCodes:string[] = this.companyDetails.map(CD=>CD.company.companyCode);
+    this.service.downloadExcel(companyCodes, this.startDate, this.endDate)
+      .subscribe(file=> {
+      const url:string = URL.createObjectURL(file);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "Export.xlsx");
+      link.style.display = "none";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
   }
 }

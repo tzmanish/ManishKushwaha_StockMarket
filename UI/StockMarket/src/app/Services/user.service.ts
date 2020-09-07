@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IPODetails } from '../Models/ipodetails';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Company } from '../Models/company';
 import { CompanyDetails } from '../Models/company-details';
@@ -30,5 +30,14 @@ export class UserService {
       .get<CompanyDetails>(`${this.path}/User/StockPrices/${companyCode}/${startDate}/${endDate}`)
       .pipe(first())
       .toPromise();
+  }
+
+  public downloadExcel(companyCodes:string[], startDate:string, endDate:string):Observable<Blob>{
+    const body = {
+      companyCodes: companyCodes,
+      startDate: startDate,
+      endDate: endDate
+    }
+    return this.http.post(`${this.path}/Excel/Download`, body, {responseType: 'blob'});
   }
 }

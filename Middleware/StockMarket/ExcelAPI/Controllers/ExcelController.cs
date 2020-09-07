@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography.Xml;
 using ExcelAPI.Models;
 using ExcelAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace ExcelAPI.Controllers {
     [Route("api/[controller]")]
@@ -44,17 +46,25 @@ namespace ExcelAPI.Controllers {
         }
 
         [HttpPost]
-        [Route("Update/{worksheet}/{*filePath}")]
-        public IActionResult ExportExcel(string worksheet, string filePath, List<StockPrice> stockPrices) {
+        [Authorize(Roles = "user")]
+        [Route("Download")]
+        public IActionResult DownloadExcel(TempObj tempObj) {
             try {
-                if (stockPrices.Count>0) {
-                    service.ExportData(filePath, worksheet, stockPrices);
-                    return Ok(filePath);
-                } else 
-                    return BadRequest("Please provide some data to write.");
+                var file = service.ExportData(
+                    tempObj.companyCodes, 
+                    tempObj.startDate, 
+                    tempObj.endDate
+                );
+                return Ok(file);
             } catch (Exception ex) {
                 return StatusCode(500, ex.Message);
             }
+        }
+
+        public class TempObj {
+            public List<string> companyCodes { get; set; }
+            public DateTime startDate { get; set; }
+            public DateTime endDate { get; set; }
         }
     }
 }

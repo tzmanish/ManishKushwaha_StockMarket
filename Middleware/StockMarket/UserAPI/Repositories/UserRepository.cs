@@ -32,8 +32,8 @@ namespace UserAPI.Repositories {
             return context.StockPrices
                 .Where(sp => 
                     sp.CompanyCode == companyCode && 
-                    sp.Date > startDate && 
-                    sp.Date < endDate
+                    sp.Date >= startDate && 
+                    sp.Date <= endDate
                 ).OrderBy(sp=>sp.Date).ToList();
         }
 
