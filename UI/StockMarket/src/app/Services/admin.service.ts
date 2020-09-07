@@ -61,6 +61,10 @@ export class AdminService {
     return http.post<StockPrice[]>(`${this.path}/Excel/Upload`, formData, options);
   }
 
+  public downloadSample():Observable<Blob>{
+    return this.http.get(`${this.path}/Excel/Sample`, {responseType: 'blob'});
+  }
+
   
   private _reloadIpos = new Subject<void>();
   get reloadIpos(){return this._reloadIpos;}

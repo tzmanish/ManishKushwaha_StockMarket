@@ -24,7 +24,7 @@ namespace ExcelAPI.Controllers {
                 var postedFile = Request.Form.Files["ExcelFile"];
                 string worksheet = Request.Form["Worksheet"][0];
 
-                string filePath = Path.Combine("Uploads", postedFile.FileName);
+                string filePath = Path.Combine("ExcelFiles\\Uploads", postedFile.FileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                     postedFile.CopyTo(fileStream);
 
@@ -32,6 +32,15 @@ namespace ExcelAPI.Controllers {
             } catch(Exception ex) {
                 return StatusCode(500, ex.Message);
             }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        [Route("Sample")]
+        public IActionResult DownloadSample() {
+            string filepath = Path.Combine("ExcelFiles\\Downloads", "Sample.xlsx");
+            var file = new FileStream(filepath, FileMode.Open, FileAccess.Read);
+            return Ok(file);
         }
 
         [HttpPost]

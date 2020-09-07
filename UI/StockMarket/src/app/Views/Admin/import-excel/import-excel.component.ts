@@ -33,10 +33,22 @@ export class ImportExcelComponent implements OnInit {
             errMsg = `Error: ${err.error.message}`;
         else
             errMsg = `Error ${err.status} - ${err.error}`;
+        // console.log(err)
         this.flashMessage.show( errMsg, {cssClass: 'alert-danger', timeout: 4000} );
       });
   }
 
-  downloadSample(){}
+  downloadSample(){
+    this.service.downloadSample().subscribe(file=> {
+      const url:string = URL.createObjectURL(file);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "Template.xlsx");
+      link.style.display = "none";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
 
 }
